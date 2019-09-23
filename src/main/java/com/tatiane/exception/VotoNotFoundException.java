@@ -11,9 +11,7 @@ public class VotoNotFoundException extends RuntimeException {
 	}
 
 	public VotoNotFoundException() {
-		super("O funcionário já votou na data de hoje no mesmo restaurante");
+		super();
 	}
-	
-	
 
 }

@@ -10,4 +10,7 @@ public class DateUtil {
 		return data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
+	public static Date converteParaDate(LocalDate localDate) {
+	 return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
 }

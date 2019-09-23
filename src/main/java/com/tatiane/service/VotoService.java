@@ -27,6 +27,8 @@ public class VotoService {
 	
 	public static final String MSG_RESTAURANTE_REPETIDO = "O restaurante escolhido já foi selecionado esta semana.";
 	
+	public static final String MSG_VOTO_REPETIDO = "O funcionário já votou na data de hoje no mesmo restaurante"; 
+	
 	private VotoRepository votoRepository;
 
 	public VotoService(VotoRepository votoRepository) {
@@ -53,7 +55,7 @@ public class VotoService {
 		restaurante.setId(idRestaurante);
 
 		if (verificaSeFuncionarioJaVotouRestauranteMesmoDia(funcionario, new Date(), restaurante)) {
-			throw new VotoNotFoundException();
+			throw new VotoNotFoundException(MSG_VOTO_REPETIDO, null);
 		}
 		Voto voto = new Voto();
 		voto.setData(new Date());
@@ -86,7 +88,13 @@ public class VotoService {
 					dtos.add(dto);
 				}
 			});
-		}			
+		}	
+		
+	if(verificaSeRestauranteJaFoiEscolhidoNaSemana(dtos.stream()
+				   .max((VotoDto o1, VotoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos()))
+				   .get()).size() > 0) {
+		throw new VotoNotFoundException(MSG_RESTAURANTE_REPETIDO, null);
+	}
 		
 		 return dtos.stream()
 				   .max((VotoDto o1, VotoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos()))
@@ -97,5 +105,19 @@ public class VotoService {
 		logger.debug( id + "voto removido" );
 		votoRepository.deleteById(id);		
 	}
-	   
+
+	
+    private List<Voto> verificaSeRestauranteJaFoiEscolhidoNaSemana(VotoDto dto) {
+	  return votoRepository.verificaSeRestauranteJaFoiEscolhidoNaSemana(dto.getRestaurante().getId(),
+			                   converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.MONDAY)),
+				               converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.FRIDAY))) ;
+
+	}	
+    
+    private Date converteParaDate(LocalDate localDate) {
+       return DateUtil.converteParaDate(localDate);
+    }
+    
+    
+	
 }

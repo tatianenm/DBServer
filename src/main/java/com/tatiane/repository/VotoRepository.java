@@ -17,9 +17,9 @@ public interface VotoRepository extends JpaRepository<Voto, Integer> {
 	
 	@Query(value="Select v From Voto v left join v.restaurante r where r.id = :idRestau and v.data between :dtInicio and :dtFim "
 			+ " and v.escolhido=true")
-	Voto verificaSeRestauranteJaFoiEscolhidoNaSemana(@Param ("idRestau") Integer idRestaurante,
-			                                         @Param("dtInicio") LocalDate dtInicio,
-			                                         @Param("dtFim") LocalDate dtFim);
+	List<Voto> verificaSeRestauranteJaFoiEscolhidoNaSemana(@Param ("idRestau") Integer idRestaurante,
+			                                         @Param("dtInicio") Date dtInicio,
+			                                         @Param("dtFim") Date dtFim);
 	
 	Voto findByFuncionarioAndDataAndRestaurante(Funcionario funcionario, Date data, Restaurante restaurante);
 	

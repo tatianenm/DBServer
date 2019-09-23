@@ -39,7 +39,7 @@ public class VotoController {
 		this.votoService = votacaoService;
 	}
 
-	@ApiOperation(value = "Retorna uma lista de voto")
+	@ApiOperation(value = "Retorna uma lista de votos")
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<Voto>> findAll() {
 		return ResponseEntity.ok(votoService.findAll());
