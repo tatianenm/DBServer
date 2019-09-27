@@ -1,6 +1,5 @@
 
-
-Projeto é uma simples aplicação onde o restaurante que receber mais votos é o escolhido do dia, feito com spring e maven, o banco de dados utilizado é o H2 em memória.
+Projeto é uma simples aplicação da escolha de um restaurante, sendo o que receber mais votos é o escolhido do dia, feito com spring e maven, testes unitários, o banco de dados utilizado é o H2 em memória.
 
 Requisitos:   
      IDE é opcional, foi utilizado STS.
