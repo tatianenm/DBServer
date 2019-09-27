@@ -48,8 +48,7 @@ public class VotacaoControllerTest {
 	public void getVotacoesTest() throws Exception {		
 		Mockito.when(votacaoService.findAll()).thenReturn(Arrays.asList(mockVotacao()));		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/votacao").accept(MediaType.APPLICATION_JSON);
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();		
-		System.out.println(result.getResponse().getContentAsString() + "moacir"); 
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();			
 		String expected = 
 				"[{\"id\":1,\"data\":\"2015-11-23T02:00:00.000+0000\",\"restaurante\":{\"id\":1,\"nome\":null,\"endereco\":null},"
 				+ "\"funcionario\":{\"id\":1,\"nome\":null,\"senha\":null,\"user\":null},\"escolhido\":true}]";	
@@ -84,4 +83,5 @@ public class VotacaoControllerTest {
 		return data;
 	}
 
+	
 }

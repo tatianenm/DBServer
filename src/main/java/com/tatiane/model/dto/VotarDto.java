@@ -1,32 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tatiane.model.dto;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class VotarDto implements Serializable {
 
-    private Integer idRestaurante;
+	private static final long serialVersionUID = 4646409658092662335L;
 
-    private Integer idFuncionario;
+	private Integer idRestaurante;
 
-    public Integer getIdRestaurante() {
-        return idRestaurante;
-    }
-
-    public void setIdRestaurante(Integer idRestaurante) {
-        this.idRestaurante = idRestaurante;
-    }
-
-    public Integer getIdFuncionario() {
-        return idFuncionario;
-    }
-
-    public void setIdFuncionario(Integer idFuncionario) {
-        this.idFuncionario = idFuncionario;
-    }
+    private Integer idFuncionario;   
 
 }

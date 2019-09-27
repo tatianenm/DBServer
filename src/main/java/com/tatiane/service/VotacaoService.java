@@ -35,29 +35,14 @@ public class VotacaoService {
         return ent;
     }
 
-//   private Boolean verificaSeExisteIdRestauranteRepetidoNoBanco(Integer idRestaurante) {
-//	   Calendar primeiroDiaSemana  = new GregorianCalendar();
-//	   int semanaMinima = primeiroDiaSemana.getActualMinimum(Calendar.DAY_OF_WEEK_IN_MONTH);
-//	   primeiroDiaSemana.set(Calendar.DAY_OF_WEEK,semanaMinima);
-//
-//	   Calendar ultimoDiaSemana  = new GregorianCalendar();
-//	   int semanaMaxima =  ultimoDiaSemana.getActualMaximum(Calendar.DAY_OF_WEEK);
-//	   ultimoDiaSemana.set(Calendar.DAY_OF_WEEK,semanaMaxima);
-//
-//	   Date dtInicioSemana = primeiroDiaSemana.getTime();
-//	   Date dtFimSemana =  ultimoDiaSemana.getTime();
-//
-//	   List<Votacao>  votacao = votacaoRepository.verificaSeExisteIdRestauranteNoBanco(idRestaurante,dtInicioSemana, dtFimSemana);
-//	   return  Optional.ofNullable(votacao).isPresent();
-//   }
+
     public boolean votar(Integer idRestaurante, Integer idFuncionario) {
 
         Funcionario funcionario = new Funcionario();
         funcionario.setId(idFuncionario);
         Restaurante restaurante = new Restaurante();
         restaurante.setId(idRestaurante);
-        // boolean restauranteRepetido =
-        // verificaSeExisteIdRestauranteRepetidoNoBanco(idRestaurante);
+      
         boolean votoRepetido = verificaSeFuncionarioJaVotouRestauranteMesmoDia(funcionario, new Date());
         if (votoRepetido == true) {
             return false;

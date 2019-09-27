@@ -49,9 +49,9 @@ public class VotacaoController {
         return ResponseEntity.ok(converteParaVotacao(dto));
     }
 
-    @ApiOperation(value = "Salva votação")
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = {
-        MediaType.APPLICATION_JSON_UTF8_VALUE})
+    @ApiOperation(value = "Salvar votação")
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, 
+                 consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Boolean> votarRestaurante(@RequestBody VotarDto votarDto) {
         Boolean resultado = votacaoService.votar(votarDto.getIdRestaurante(), votarDto.getIdFuncionario());
