@@ -1,5 +1,7 @@
 package com.tatiane;
 
+import static org.hamcrest.CoreMatchers.any;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -83,5 +85,8 @@ public class VotacaoControllerTest {
 		return data;
 	}
 
+	public void deveSalvarVotacaoTest() {
+		Mockito.when(votacaoService.votar(,)).
+	}
 	
 }
