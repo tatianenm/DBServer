@@ -89,14 +89,7 @@ public class VotacaoControllerTest {
 		return data;
 	}
 	
-	@Test
-	public void salvarVotoRestaurante() throws Exception {
-	  Mockito.when(votacaoService.votar(1,2)).thenReturn(Boolean.TRUE);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/votacao").accept(MediaType.APPLICATION_JSON);
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();	
 	
-		
-	}
 	
 	private VotacaoDto mockVotacaoDto() {
 		VotacaoDto dto = new VotacaoDto();
@@ -106,8 +99,5 @@ public class VotacaoControllerTest {
 		return dto;
 	}
 
-	public void deveSalvarVotacaoTest() {
-		Mockito.when(votacaoService.votar(,)).
-	}
 	
 }
