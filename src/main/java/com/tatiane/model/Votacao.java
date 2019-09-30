@@ -13,6 +13,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,6 +47,7 @@ public class Votacao implements Serializable {
     @Column(name = "escolhido")
     private Boolean escolhido;
 
+    @JsonIgnore
     @Transient
     private Integer quantidadeVotos;
 
