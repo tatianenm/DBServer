@@ -53,7 +53,7 @@ public class VotacaoController {
     @PostMapping(produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, 
                  consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Boolean> salvarVotacao(@RequestBody VotarDto votarDto) {
+    public ResponseEntity<Boolean> salvarVotoRestaurante(@RequestBody VotarDto votarDto) {
         Boolean resultado = votacaoService.votar(votarDto.getIdRestaurante(), votarDto.getIdFuncionario());
         if (resultado) {
             return ResponseEntity.ok(resultado);
