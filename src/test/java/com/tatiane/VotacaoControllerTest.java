@@ -92,10 +92,7 @@ public class VotacaoControllerTest {
 	  Mockito.when(votacaoService.votar(1,2)).thenReturn(Boolean.TRUE);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/votacao").accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();	
-		System.out.println(result.getResponse().getContentAsString() + "moacir");
-		String expected = 
-				"[{\"data\":\"2015-11-23T02:00:00.000+0000\",\"restaurante\":{\"id\":1,\"nome\":null,\"endereco\":null},\"quantidadeVotos\":1}]";
-		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+	
 		
 	}
 	
