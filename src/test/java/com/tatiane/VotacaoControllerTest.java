@@ -22,9 +22,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tatiane.model.Funcionario;
 import com.tatiane.model.Restaurante;
 import com.tatiane.model.Votacao;
+import com.tatiane.model.dto.VotacaoDto;
 import com.tatiane.service.VotacaoService;
 
 @RunWith(SpringRunner.class)
@@ -38,6 +40,8 @@ public class VotacaoControllerTest {
 	
 	@Autowired
 	private WebApplicationContext context;
+	
+	ObjectMapper om = new ObjectMapper();
 	
 	@Before
 	public void setUp() {
@@ -81,6 +85,26 @@ public class VotacaoControllerTest {
 			e.printStackTrace();
 		}
 		return data;
+	}
+	
+	@Test
+	public void salvarVotoRestaurante() throws Exception {
+	  Mockito.when(votacaoService.votar(1,2)).thenReturn(Boolean.TRUE);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/votacao").accept(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();	
+		System.out.println(result.getResponse().getContentAsString() + "moacir");
+		String expected = 
+				"[{\"data\":\"2015-11-23T02:00:00.000+0000\",\"restaurante\":{\"id\":1,\"nome\":null,\"endereco\":null},\"quantidadeVotos\":1}]";
+		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+		
+	}
+	
+	private VotacaoDto mockVotacaoDto() {
+		VotacaoDto dto = new VotacaoDto();
+		dto.setData(formataData());
+		dto.setRestaurante(mockRestaurante());
+		dto.setQuantidadeVotos(1);
+		return dto;
 	}
 
 	
