@@ -1,7 +1,5 @@
 package com.tatiane;
 
-import static org.hamcrest.CoreMatchers.any;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -28,7 +26,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tatiane.model.Funcionario;
 import com.tatiane.model.Restaurante;
 import com.tatiane.model.Votacao;
-import com.tatiane.model.dto.VotacaoDto;
 import com.tatiane.service.VotacaoService;
 
 @RunWith(SpringRunner.class)
@@ -90,14 +87,6 @@ public class VotacaoControllerTest {
 	}
 	
 	
-	
-	private VotacaoDto mockVotacaoDto() {
-		VotacaoDto dto = new VotacaoDto();
-		dto.setData(formataData());
-		dto.setRestaurante(mockRestaurante());
-		dto.setQuantidadeVotos(1);
-		return dto;
-	}
 
 	
 }

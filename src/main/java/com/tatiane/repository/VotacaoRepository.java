@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.tatiane.model.Funcionario;
+import com.tatiane.model.Restaurante;
 import com.tatiane.model.Votacao;
 
 public interface VotacaoRepository extends JpaRepository<Votacao, Integer> {
@@ -19,7 +20,7 @@ public interface VotacaoRepository extends JpaRepository<Votacao, Integer> {
 			                                           @Param("dtInicio") Date dtInicio,
 			                                           @Param("dtFim") Date dtFim);
 	
-	Votacao findByFuncionarioAndData(Funcionario funcionario, Date data);
+	Votacao findByFuncionarioAndDataAndRestaurante(Funcionario funcionario, Date data, Restaurante restaurante);
 	
 	List<Votacao> findByData(Date data); 
 }

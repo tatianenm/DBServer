@@ -14,5 +14,7 @@ public class VotarDto implements Serializable {
 	private Integer idRestaurante;
 
 	private Integer idFuncionario;
+	
+	private Boolean escolhido;
 
 }

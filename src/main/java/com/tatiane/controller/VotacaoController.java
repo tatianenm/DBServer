@@ -26,49 +26,45 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/votacao")
 public class VotacaoController {
 
-    private Logger logger = LoggerFactory.getLogger(VotacaoController.class);
+	private Logger logger = LoggerFactory.getLogger(VotacaoController.class);
 
-    private VotacaoService votacaoService;
+	private VotacaoService votacaoService;
 
-    @Autowired
-    public VotacaoController(VotacaoService votacaoService) {
-        this.votacaoService = votacaoService;
-    }
+	@Autowired
+	public VotacaoController(VotacaoService votacaoService) {
+		this.votacaoService = votacaoService;
+	}
 
-    @ApiOperation(value = "Retorna uma lista de votacao")
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<List<Votacao>> findAll() {
-        List<Votacao> votacoes = votacaoService.findAll();
-        return ResponseEntity.ok(votacoes);
-    }
+	@ApiOperation(value = "Retorna uma lista de votacao")
+	@GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<Votacao>> findAll() {
+		List<Votacao> votacoes = votacaoService.findAll();
+		return ResponseEntity.ok(votacoes);
+	}
 
-    @ApiOperation(value = "Resultado da votação")
-    @GetMapping("/restaurante/mostrarResultadoVotacao")
-    public ResponseEntity<Votacao> mostrarResultadoVotacao() {
-        VotacaoDto dto = votacaoService.retornaResultadoVotacao(new Date());
-        return ResponseEntity.ok(converteParaVotacao(dto));
-    }
+	@ApiOperation(value = "Resultado da votação")
+	@GetMapping("/restaurante/mostrarResultadoVotacao")
+	public ResponseEntity<Votacao> mostrarResultadoVotacao() {
+		VotacaoDto dto = votacaoService.retornaResultadoVotacao(new Date());
+		return ResponseEntity.ok(converteParaVotacao(dto));
+	}
 
-    @ApiOperation(value = "Salvar votação")
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, 
-                 consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Boolean> salvarVotoRestaurante(@RequestBody VotarDto votarDto) {
-        Boolean resultado = votacaoService.votar(votarDto.getIdRestaurante(), votarDto.getIdFuncionario());
-        if (resultado) {
-            return ResponseEntity.ok(resultado);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
+	@ApiOperation(value = "Salvar votação")
+	@PostMapping(path = "/votar", 
+	             produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
+	             consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseStatus(HttpStatus.CREATED)
+	public Votacao salvarVotoRestaurante(@RequestBody VotarDto votarDto) throws Exception {
+		Votacao resultado = votacaoService.votar(votarDto.getIdRestaurante(), votarDto.getIdFuncionario());
+		return resultado;
+	}
 
-    private Votacao converteParaVotacao(VotacaoDto dto) {
-        Votacao votacao = new Votacao();
-        votacao.setData(dto.getData());
-        votacao.setRestaurante(dto.getRestaurante());
-        votacao.setEscolhido(true);
-        votacao.setQuantidadeVotos(dto.getQuantidadeVotos());
-        return votacao;
-    }
+	private Votacao converteParaVotacao(VotacaoDto dto) {
+		Votacao votacao = new Votacao();
+		votacao.setData(dto.getData());
+		votacao.setRestaurante(dto.getRestaurante());
+		votacao.setEscolhido(true);
+		return votacao;
+	}
 
 }
