@@ -1,5 +1,8 @@
 package com.tatiane;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -31,52 +34,51 @@ import com.tatiane.service.VotacaoService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class VotacaoControllerTest {
-	
+
 	private MockMvc mockMvc;
-	
+
 	@MockBean
 	private VotacaoService votacaoService;
-	
+
 	@Autowired
 	private WebApplicationContext context;
-	
+
 	ObjectMapper om = new ObjectMapper();
-	
+
 	@Before
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
-	
+
 	@Test
-	public void getVotacoesTest() throws Exception {		
-		Mockito.when(votacaoService.findAll()).thenReturn(Arrays.asList(mockVotacao()));		
+	public void getVotacoesTest() throws Exception {
+		Mockito.when(votacaoService.findAll()).thenReturn(Arrays.asList(mockVotacao()));
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/votacao").accept(MediaType.APPLICATION_JSON);
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();			
-		String expected = 
-				"[{\"id\":1,\"data\":\"2015-11-23T02:00:00.000+0000\",\"restaurante\":{\"id\":1,\"nome\":null,\"endereco\":null},"
-				+ "\"funcionario\":{\"id\":1,\"nome\":null,\"senha\":null,\"user\":null},\"escolhido\":true}]";	
-		
-		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);		
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		String expected = "[{\"id\":1,\"data\":\"2015-11-23T02:00:00.000+0000\",\"restaurante\":{\"id\":1,\"nome\":null,\"endereco\":null},"
+				+ "\"funcionario\":{\"id\":1,\"nome\":null,\"senha\":null,\"user\":null},\"escolhido\":true}]";
+
+		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
 	}
-	
-	private Restaurante mockRestaurante() {		
+
+	private Restaurante mockRestaurante() {
 		Restaurante restaurante = new Restaurante();
 		restaurante.setId(1);
-		return restaurante;		
+		return restaurante;
 	}
-	
+
 	private Funcionario mockFuncionario() {
 		Funcionario funcionario = new Funcionario();
 		funcionario.setId(1);
-		return funcionario;		
+		return funcionario;
 	}
-	
+
 	private Votacao mockVotacao() {
-	   return new Votacao(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.TRUE);
+		return new Votacao(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.TRUE);
 	}
-	
+
 	private Date formataData() {
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		Date data = null;
 		try {
 			data = formato.parse("23/11/2015");
@@ -85,8 +87,24 @@ public class VotacaoControllerTest {
 		}
 		return data;
 	}
-	
-	
 
-	
+	@Test
+	public void salvarVotoRestauranteTest() throws Exception {
+		Mockito.when(votacaoService.votar(1, 2)).thenReturn(mockSalvarVotacao());
+		 mockMvc.perform(post("/votacao/votar")
+	     .contentType("application/json")
+	     .content(om.writeValueAsString(mockSalvarVotacao())))
+		 .andExpect(status().is2xxSuccessful());
+
+	}
+
+	private Votacao mockSalvarVotacao() {
+		Votacao votacao = new Votacao();
+		votacao.setData(formataData());
+		votacao.setRestaurante(mockRestaurante());
+		votacao.setEscolhido(false);
+		votacao.setFuncionario(mockFuncionario());
+		return votacao;
+	}
+
 }
