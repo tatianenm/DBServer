@@ -90,4 +90,9 @@ public class VotacaoService {
 		return dtoRetorno;
 	}
 
+	public void excluir(Integer id) {
+		logger.debug( id + "removido" );
+		votacaoRepository.deleteById(id);
+		
+	}
 }
