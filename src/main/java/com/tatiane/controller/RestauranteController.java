@@ -1,6 +1,7 @@
 package com.tatiane.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,22 @@ public class RestauranteController {
 	                                         @PathVariable(value = "id", required = true) Integer id) {
 		restauranteService.excluirRestaurante(id);
 		return ResponseEntity.ok().build();		
+	}
+	
+	@ApiOperation(value = "Pesquisar Restaurante" )
+	@GetMapping(path = "pesquisarRestaurante/{id}",
+			    produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<Restaurante> pesquisarRestaurante(@ApiParam(name = "id", value = "Restaurante id", required = true)
+	                                                        @PathVariable(value = "id", required = true) Integer id){
+		 Optional<Restaurante> restaurante =  restauranteService.findOne(id);
+		 
+		
+			 return ResponseEntity.of(restaurante);
+		 
+		 
+																
+		
+		
 	}
 
 	
