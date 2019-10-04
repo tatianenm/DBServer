@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +18,7 @@ import com.tatiane.service.RestauranteService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @Api(value="API Restaurante")
 @RestController
@@ -36,6 +39,15 @@ public class RestauranteController {
 	public  ResponseEntity<List<Restaurante>> findAll(){
 		List<Restaurante> restaurantes = restauranteService.findAll();
 		return ResponseEntity.ok(restaurantes);
+	}
+	
+	@ApiOperation(value = "Excluir restaurante")
+	@DeleteMapping(path = "/{id}",
+	               consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity excluirRestaurante(@ApiParam(name = "id", value = "Restaurante id", required = true)
+	                                         @PathVariable(value = "id", required = true) Integer id) {
+		restauranteService.excluirRestaurante(id);
+		return ResponseEntity.ok().build();		
 	}
 
 	

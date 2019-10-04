@@ -91,8 +91,7 @@ public class VotacaoService {
 	}
 
 	public void excluir(Integer id) {
-		logger.debug( id + "removido" );
-		votacaoRepository.deleteById(id);
-		
+		logger.debug( id + "votação removido" );
+		votacaoRepository.deleteById(id);		
 	}
 }

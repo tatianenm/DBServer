@@ -32,6 +32,9 @@ public class RestauranteService {
     	return ent;
     }
 	
-	
+	public void excluirRestaurante(Integer id) {
+		logger.debug(id + "restaurante removido");
+		restauranteRepository.deleteById(id);
+	}	
 
 }

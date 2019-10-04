@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +18,7 @@ import com.tatiane.service.FuncionarioService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @Api(value="API Restaurante")
 @RestController
@@ -36,6 +39,15 @@ public class FuncionarioController {
     public ResponseEntity<List<Funcionario>> findAll(){
     	List<Funcionario> funcionarios = funcionarioService.findAll();
     	return ResponseEntity.ok(funcionarios);
+    }
+    
+    @ApiOperation(value = "Excluir um funcionário")
+    @DeleteMapping(path = "/{id}",
+                   consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity excluirFuncionario(@ApiParam(name = "id", value = "Funcionário id", required = true)
+    		                                 @PathVariable(value = "id", required = true) Integer id) {
+    	funcionarioService.excluirFuncionario(id);
+    	return ResponseEntity.ok().build();
     }
 	
 }

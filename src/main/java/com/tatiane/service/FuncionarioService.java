@@ -25,7 +25,11 @@ public class FuncionarioService {
 	public List<Funcionario> findAll(){
 		List<Funcionario> funcionarios = funcionarioRepository.findAll();
 		return funcionarios;
-	}
+	}	
 	
+	public void excluirFuncionario(Integer id) {
+		logger.debug( id + "funcionário removido");
+		funcionarioRepository.deleteById(id);
+	} 
 	
 }
