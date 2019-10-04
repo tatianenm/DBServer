@@ -43,7 +43,7 @@ public class RestauranteController {
 	
 	@ApiOperation(value = "Excluir restaurante")
 	@DeleteMapping(path = "/{id}",
-	               consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+                   produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity excluirRestaurante(@ApiParam(name = "id", value = "Restaurante id", required = true)
 	                                         @PathVariable(value = "id", required = true) Integer id) {
 		restauranteService.excluirRestaurante(id);

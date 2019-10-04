@@ -41,13 +41,13 @@ public class FuncionarioController {
     	return ResponseEntity.ok(funcionarios);
     }
     
-    @ApiOperation(value = "Excluir um funcionário")
-    @DeleteMapping(path = "/{id}",
-                   consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity excluirFuncionario(@ApiParam(name = "id", value = "Funcionário id", required = true)
-    		                                 @PathVariable(value = "id", required = true) Integer id) {
-    	funcionarioService.excluirFuncionario(id);
-    	return ResponseEntity.ok().build();
-    }
+    @ApiOperation(value = "Excluir funcionário")
+	@DeleteMapping(path = "/{id}",
+	               produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity excluirFuncionario(@ApiParam(name = "id", value = "Funcionário id", required = true )
+	                                     @PathVariable(value = "id", required = true) Integer id ) {
+		funcionarioService.excluirFuncionario(id);
+		return ResponseEntity.ok().build();
+	} 
 	
 }
