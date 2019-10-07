@@ -6,10 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.tatiane.exception.RestauranteNotFoundException;
 import com.tatiane.model.Restaurante;
 import com.tatiane.repository.RestauranteRepository;
-
-import exception.RestauranteNotFoundException;
 
 @Service
 public class RestauranteService {
