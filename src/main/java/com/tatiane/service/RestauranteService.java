@@ -24,7 +24,7 @@ public class RestauranteService {
 
 	public List<Restaurante> findAll() {
 		return restauranteRepository.findAll().stream()
-	                                          .sorted((r1,r2)->r1.getNome().compareTo(r2.getNome()))
+	                                          .sorted((r1,r2)->r1.getNome().compareToIgnoreCase(r2.getNome()))
 				                              .collect(Collectors.toList());
 	}
 
