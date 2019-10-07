@@ -1,6 +1,7 @@
 package com.tatiane.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +25,11 @@ public class FuncionarioService {
 	}
     
 	public List<Funcionario> findAll(){
-		List<Funcionario> funcionarios = funcionarioRepository.findAll();
-		return funcionarios;
+		return funcionarioRepository.findAll()
+				                    .stream()
+				                    .sorted((f1,f2)->f1.getNome().compareToIgnoreCase(f2.getNome()))
+				                    .collect(Collectors.toList());
+		
 	}	
 	
 	public void excluirFuncionario(Integer id) {

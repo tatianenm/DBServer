@@ -36,6 +36,9 @@ INSERT INTO funcionario(id, nome, user, senha) VALUES (4, 'Patrícia', 'patricia
 INSERT INTO funcionario(id, nome, user, senha) VALUES (5, 'Susi', 'susi', '123');
 INSERT INTO funcionario(id, nome, user, senha) VALUES (6, 'André', 'andre', '123');
 INSERT INTO funcionario(id, nome, user, senha) VALUES (7, 'Pedro', 'pedro', '123');
+INSERT INTO funcionario(id, nome, user, senha) VALUES (8, 'Pedro Silva', 'silva', '123');
+INSERT INTO funcionario(id, nome, user, senha) VALUES (9, 'Marco Antônio', 'antonio', '123');
+INSERT INTO funcionario(id, nome, user, senha) VALUES (10, 'Jose Gomes', 'gomes', '123');
 
 
 --CREATE TABLE votacao (

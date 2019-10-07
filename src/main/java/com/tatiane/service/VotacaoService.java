@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +30,10 @@ public class VotacaoService {
 	}
 
 	public List<Votacao> findAll() {
-		List<Votacao> votacoes = votacaoRepository.findAll();
-		return votacoes;
+	    return	 votacaoRepository.findAll()
+	    		                  .stream()
+	    		                  .sorted((v1,v2)-> v2.getData().compareTo(v1.getData()))
+	    		                  .collect(Collectors.toList());
 	}
 
 	public Optional<Votacao> findOne(Integer id) {
