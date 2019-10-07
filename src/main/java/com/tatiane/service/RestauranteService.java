@@ -37,5 +37,9 @@ public class RestauranteService {
 		logger.debug(id + "restaurante removido");
 		restauranteRepository.deleteById(id);
 	}
+	
+	public Restaurante cadastroRestaurante(Restaurante restaurante) {
+		return restauranteRepository.save(restaurante);
+	}
 
 }
