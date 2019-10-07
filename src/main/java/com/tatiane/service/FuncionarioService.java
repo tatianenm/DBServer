@@ -33,9 +33,13 @@ public class FuncionarioService {
 		funcionarioRepository.deleteById(id);
 	} 
 	
-	public Funcionario pesquisarFuncionarioPeloNome(String nome) {
+	public List<Funcionario> pesquisarFuncionarioPeloNome(String nome) {
 		return funcionarioRepository.findByNomeContainingIgnoreCase(nome).orElseThrow(FuncionarioNotFoundException::new);	
 		
 	} 
+	
+	public Funcionario cadastroFuncionario(Funcionario funcionario) {
+		return funcionarioRepository.save(funcionario);		
+	}
 	
 }
