@@ -42,8 +42,7 @@ public class VotacaoController {
 	@ApiOperation(value = "Retorna uma lista de votacao")
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<Votacao>> findAll() {
-		List<Votacao> votacoes = votacaoService.findAll();
-		return ResponseEntity.ok(votacoes);
+		return ResponseEntity.ok(votacaoService.findAll());
 	}
 
 	@ApiOperation(value = "Resultado da votação")

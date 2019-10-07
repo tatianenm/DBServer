@@ -38,8 +38,7 @@ public class RestauranteController {
 	@ApiOperation(value="Retorna uma lista de restaurantes")
     @GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public  ResponseEntity<List<Restaurante>> findAll(){
-		List<Restaurante> restaurantes = restauranteService.findAll();
-		return ResponseEntity.ok(restaurantes);
+		return ResponseEntity.ok(restauranteService.findAll());
 	}
 	
 	@ApiOperation(value = "Excluir restaurante")

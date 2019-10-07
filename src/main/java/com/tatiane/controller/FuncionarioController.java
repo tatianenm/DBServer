@@ -37,17 +37,24 @@ public class FuncionarioController {
     @ApiOperation(value= "Retorna uma lista de funcionários")
 	@GetMapping( produces = { MediaType.APPLICATION_JSON_UTF8_VALUE } )
     public ResponseEntity<List<Funcionario>> findAll(){
-    	List<Funcionario> funcionarios = funcionarioService.findAll();
-    	return ResponseEntity.ok(funcionarios);
+    	return ResponseEntity.ok(funcionarioService.findAll());
     }
     
     @ApiOperation(value = "Excluir funcionário")
 	@DeleteMapping(path = "/{id}",
 	               produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity excluirFuncionario(@ApiParam(name = "id", value = "Funcionário id", required = true )
-	                                     @PathVariable(value = "id", required = true) Integer id ) {
+	                                         @PathVariable(value = "id", required = true) Integer id ) {
 		funcionarioService.excluirFuncionario(id);
 		return ResponseEntity.ok().build();
 	} 
+    
+    @ApiOperation(value = "Pesquisar funcionário")
+    @GetMapping(path = "/{nome}",
+                produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<Funcionario> pesquisarFuncionario(@ApiParam(name = "nome", value = "Funcionário nome", required = true )
+                                                            @PathVariable(value = "nome", required = true) String nome){
+    	return ResponseEntity.ok(funcionarioService.pesquisarFuncionarioPeloNome(nome));
+    }
 	
 }

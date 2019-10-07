@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tatiane.exception.FuncionarioNotFoundException;
 import com.tatiane.model.Funcionario;
 import com.tatiane.repository.FuncionarioRepository;
 
@@ -30,6 +31,11 @@ public class FuncionarioService {
 	public void excluirFuncionario(Integer id) {
 		logger.debug( id + "funcionário removido");
 		funcionarioRepository.deleteById(id);
+	} 
+	
+	public Funcionario pesquisarFuncionarioPeloNome(String nome) {
+		return funcionarioRepository.findByNomeContainingIgnoreCase(nome).orElseThrow(FuncionarioNotFoundException::new);	
+		
 	} 
 	
 }
