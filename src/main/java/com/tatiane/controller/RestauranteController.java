@@ -59,6 +59,5 @@ public class RestauranteController {
 		 Optional<Restaurante> restaurante =  restauranteService.findOne(id);		
 		 return ResponseEntity.of(restaurante);		
 	}
-
 	
 }
