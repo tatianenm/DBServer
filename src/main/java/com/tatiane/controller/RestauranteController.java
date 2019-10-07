@@ -54,9 +54,8 @@ public class RestauranteController {
 	@GetMapping(path = "pesquisarRestaurante/{id}",
 			    produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<Restaurante> pesquisarRestaurante(@ApiParam(name = "id", value = "Restaurante id", required = true)
-	                                                        @PathVariable(value = "id", required = true) Integer id){
-		 Restaurante restaurante =  restauranteService.findOne(id);		
-		 return ResponseEntity.ok(restaurante);		
+	                                                        @PathVariable(value = "id", required = true) Integer id){		
+		 return ResponseEntity.ok(restauranteService.findOne(id));		
 	}
 	
 }
