@@ -52,7 +52,7 @@ public class FuncionarioController {
     @ApiOperation(value = "Pesquisar funcionário")
     @GetMapping(path = "/{nome}",
                 produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<Funcionario> pesquisarFuncionario(@ApiParam(name = "nome", value = "Funcionário nome", required = true )
+    public ResponseEntity<Funcionario> pesquisarFuncionarioPeloNome(@ApiParam(name = "nome", value = "Funcionário nome", required = true )
                                                             @PathVariable(value = "nome", required = true) String nome){
     	return ResponseEntity.ok(funcionarioService.pesquisarFuncionarioPeloNome(nome));
     }
