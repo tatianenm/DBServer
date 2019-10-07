@@ -1,6 +1,7 @@
 package com.tatiane.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,9 @@ public class RestauranteService {
 	}
 
 	public List<Restaurante> findAll() {
-		List<Restaurante> restaurantes = restauranteRepository.findAll();
-		return restaurantes;
+		return restauranteRepository.findAll().stream()
+				                              .sorted((r1,r2)->r1.getNome().compareTo(r2.getNome()))
+				                              .collect(Collectors.toList());
 	}
 
 	public Restaurante findOne(Integer id) {

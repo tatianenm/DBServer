@@ -38,8 +38,7 @@ public class VotacaoService {
 
 	public Optional<Votacao> findOne(Integer id) {
 		logger.debug("find:" + id);
-		Optional<Votacao> ent = votacaoRepository.findById(id);
-		return ent;
+		return votacaoRepository.findById(id);
 	}
 
 	public Votacao votar(Integer idRestaurante, Integer idFuncionario) throws Exception {
@@ -87,10 +86,9 @@ public class VotacaoService {
 				}
 			});
 		}
-		dtoRetorno = dtos.stream()
-				.max((VotacaoDto o1, VotacaoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos()))
-				.get();
-		return dtoRetorno;
+		return dtos.stream()
+				   .max((VotacaoDto o1, VotacaoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos()))
+				   .get();
 	}
 
 	public void excluir(Integer id) {
