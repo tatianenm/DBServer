@@ -30,10 +30,10 @@ public class VotacaoService {
 	}
 
 	public List<Votacao> findAll() {
-	    return	 votacaoRepository.findAll()
-	    		                  .stream()
-	    		                  .sorted((v1,v2)-> v2.getData().compareTo(v1.getData()))
-	    		                  .collect(Collectors.toList());
+	    return votacaoRepository.findAll()
+	    		                 .stream()
+	    		                 .sorted((v1,v2)-> v2.getData().compareTo(v1.getData()))
+	    		                 .collect(Collectors.toList());
 	}
 
 	public Optional<Votacao> findOne(Integer id) {

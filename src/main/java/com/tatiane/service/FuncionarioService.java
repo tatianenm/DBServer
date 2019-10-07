@@ -28,8 +28,7 @@ public class FuncionarioService {
 		return funcionarioRepository.findAll()
 				                    .stream()
 				                    .sorted((f1,f2)->f1.getNome().compareToIgnoreCase(f2.getNome()))
-				                    .collect(Collectors.toList());
-		
+				                    .collect(Collectors.toList());		
 	}	
 	
 	public void excluirFuncionario(Integer id) {
