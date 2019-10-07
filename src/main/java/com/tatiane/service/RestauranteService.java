@@ -1,7 +1,6 @@
 package com.tatiane.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.tatiane.model.Restaurante;
 import com.tatiane.repository.RestauranteRepository;
+
+import exception.RestauranteNotFoundException;
 
 @Service
 public class RestauranteService {
@@ -26,10 +27,9 @@ public class RestauranteService {
 		return restaurantes;
 	}
 
-	public Optional<Restaurante> findOne(Integer id) {
+	public Restaurante findOne(Integer id) {
 		logger.debug("find:" + id);
-		Optional<Restaurante> ent = restauranteRepository.findById(id);
-		return ent;
+		return restauranteRepository.findById(id).orElseThrow(RestauranteNotFoundException::new);		
 	}
 
 	public void excluirRestaurante(Integer id) {

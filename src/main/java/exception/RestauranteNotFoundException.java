@@ -10,7 +10,7 @@ public class RestauranteNotFoundException extends RuntimeException {
 	}
 	
 	public RestauranteNotFoundException() {
-		super("Restaurante não encontrado");
+		super("Restaurante não encontrado.");
 	}
 
 }

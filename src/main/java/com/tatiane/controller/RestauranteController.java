@@ -56,8 +56,8 @@ public class RestauranteController {
 			    produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<Restaurante> pesquisarRestaurante(@ApiParam(name = "id", value = "Restaurante id", required = true)
 	                                                        @PathVariable(value = "id", required = true) Integer id){
-		 Optional<Restaurante> restaurante =  restauranteService.findOne(id);		
-		 return ResponseEntity.of(restaurante);		
+		 Restaurante restaurante =  restauranteService.findOne(id);		
+		 return ResponseEntity.ok(restaurante);		
 	}
 	
 }
