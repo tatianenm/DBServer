@@ -68,7 +68,6 @@ public class VotacaoService {
 	public VotacaoDto retornaResultadoVotacao(Date data) {
 		List<Votacao> votacoes = votacaoRepository.findByData(data);
 		List<VotacaoDto> dtos = new ArrayList<>();
-		VotacaoDto dtoRetorno = null;
 
 		if (votacoes != null) {
 			votacoes.forEach(voto -> {
