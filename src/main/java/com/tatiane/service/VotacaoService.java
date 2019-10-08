@@ -41,7 +41,7 @@ public class VotacaoService {
 		return votacaoRepository.findById(id);
 	}
 
-	public Votacao votar(Integer idRestaurante, Integer idFuncionario) throws Exception {
+	public Votacao votar(Integer idRestaurante, Integer idFuncionario) throws Exception  {
 
 		Funcionario funcionario = new Funcionario();
 		funcionario.setId(idFuncionario);
@@ -49,7 +49,7 @@ public class VotacaoService {
 		restaurante.setId(idRestaurante);
 
 		boolean votoRepetido = verificaSeFuncionarioJaVotouRestauranteMesmoDia(funcionario, new Date(), restaurante);
-		if (votoRepetido == true) {
+		if (votoRepetido) {
 			throw new Exception(MSG_VOTO_REPETIDO);
 		}
 		Votacao votacao = new Votacao();
