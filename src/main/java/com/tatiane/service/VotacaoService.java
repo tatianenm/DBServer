@@ -48,8 +48,7 @@ public class VotacaoService {
 		Restaurante restaurante = new Restaurante();
 		restaurante.setId(idRestaurante);
 
-		boolean votoRepetido = verificaSeFuncionarioJaVotouRestauranteMesmoDia(funcionario, new Date(), restaurante);
-		if (votoRepetido) {
+		if (verificaSeFuncionarioJaVotouRestauranteMesmoDia(funcionario, new Date(), restaurante)) {
 			throw new Exception(MSG_VOTO_REPETIDO);
 		}
 		Votacao votacao = new Votacao();
