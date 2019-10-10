@@ -60,8 +60,7 @@ public class VotoService {
 	}
 
 	private boolean verificaSeFuncionarioJaVotouRestauranteMesmoDia(Funcionario funcionario, Date data, Restaurante restaurante) {
-		Voto voto = votoRepository.findByFuncionarioAndDataAndRestaurante(funcionario, data, restaurante);
-		return Optional.ofNullable(voto).isPresent();
+		return Optional.ofNullable(votoRepository.findByFuncionarioAndDataAndRestaurante(funcionario, data, restaurante)).isPresent();
 	}
 
 	public VotoDto retornaResultadoVotacao(Date data) {
