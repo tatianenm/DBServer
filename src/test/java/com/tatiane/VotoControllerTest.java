@@ -1,7 +1,5 @@
 package com.tatiane;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,18 +21,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tatiane.model.Funcionario;
 import com.tatiane.model.Restaurante;
 import com.tatiane.model.Voto;
-import com.tatiane.model.dto.VotoDto;
 import com.tatiane.service.VotoService;
 
 @RunWith(SpringRunner.class)
@@ -62,7 +56,7 @@ public class VotoControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/voto").accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		String expected = "[{\"id\":1,\"data\":\"2015-11-23T02:00:00.000+0000\",\"restaurante\":{\"id\":1,\"nome\":null,\"endereco\":null},"
-				+ "\"funcionario\":{\"id\":1,\"nome\":null,\"senha\":null,\"user\":null},\"escolhido\":true}]";
+				+ "\"funcionario\":{\"id\":1,\"nome\":null,\"senha\":null,\"user\":null},\"escolhido\":false}]";
 
 		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
 	}
@@ -80,7 +74,7 @@ public class VotoControllerTest {
 	}
 	
 	private Voto mockVoto() {
-		return new Voto(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.TRUE);
+		return new Voto(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.FALSE);
 	}
 
 	private Date formataData() {
