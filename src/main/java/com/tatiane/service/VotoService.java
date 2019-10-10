@@ -1,5 +1,7 @@
 package com.tatiane.service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,11 +18,14 @@ import com.tatiane.model.Restaurante;
 import com.tatiane.model.Voto;
 import com.tatiane.model.dto.VotoDto;
 import com.tatiane.repository.VotoRepository;
+import com.tatiane.util.DateUtil;
 
 @Service
 public class VotoService {
 
 	private Logger logger = LoggerFactory.getLogger(VotoService.class);
+	
+	public static final String MSG_RESTAURANTE_REPETIDO = "O restaurante escolhido já foi selecionado esta semana.";
 	
 	private VotoRepository votoRepository;
 
@@ -81,14 +86,28 @@ public class VotoService {
 					dtos.add(dto);
 				}
 			});
-		}
-		return dtos.stream()
+		}		
+		   
+			 if(verificaSeRestauranteJaFoiEscolhidoNaSemana(dtos.stream()
+					   .max((VotoDto o1, VotoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos())).get())){
+				 throw new VotoNotFoundException(MSG_RESTAURANTE_REPETIDO, null);
+			 }
+			
+		
+		 return dtos.stream()
 				   .max((VotoDto o1, VotoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos()))
-				   .get();
+				   .get(); 
 	}
 
 	public void excluir(Integer id) {
 		logger.debug( id + "voto removido" );
 		votoRepository.deleteById(id);		
 	}
+	
+    private boolean verificaSeRestauranteJaFoiEscolhidoNaSemana(VotoDto dto) {
+	return Optional.ofNullable(votoRepository.verificaSeRestauranteJaFoiEscolhidoNaSemana(dto.getRestaurante().getId(),
+			                   DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.MONDAY),
+				               DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.FRIDAY))).isPresent();
+	}	
+	
 }

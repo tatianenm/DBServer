@@ -59,8 +59,7 @@ public class VotoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Voto salvarVotoRestaurante(@RequestBody VotarDto votarDto) throws Exception   {			
 		return votoService.votar(votarDto.getIdRestaurante(), votarDto.getIdFuncionario());		
-	}
-	
+	}	
 
 	private Voto converteParaVoto(VotoDto dto) {
 		Voto voto = new Voto();
@@ -78,5 +77,5 @@ public class VotoController {
 		votoService.excluir(id);
 		return ResponseEntity.ok().build();
 	} 	
-
+	
 }
