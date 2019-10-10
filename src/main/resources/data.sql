@@ -41,7 +41,7 @@ INSERT INTO funcionario(id, nome, user, senha) VALUES (9, 'Marco Antônio', 'ant
 INSERT INTO funcionario(id, nome, user, senha) VALUES (10, 'Jose Gomes', 'gomes', '123');
 
 
---CREATE TABLE votacao (
+--CREATE TABLE voto (
 --  id   Long AUTO_INCREMENT PRIMARY KEY,
 --  data Date,
 --  idrestaurante Integer,
@@ -51,7 +51,7 @@ INSERT INTO funcionario(id, nome, user, senha) VALUES (10, 'Jose Gomes', 'gomes'
 --);
 
 
-INSERT INTO votacao(id, data, idrestaurante, idfuncionario, escolhido) VALUES (1, '2019-09-26',  2, 3, 0);
-INSERT INTO votacao(id, data, idrestaurante, idfuncionario, escolhido) VALUES (2, '2019-09-26',  3, 4, 0);
-INSERT INTO votacao(id, data, idrestaurante, idfuncionario, escolhido) VALUES (3, '2019-09-26',  2, 2, 0);
+INSERT INTO voto(id, data, idrestaurante, idfuncionario, escolhido) VALUES (1, '2019-09-26',  2, 3, 0);
+INSERT INTO voto(id, data, idrestaurante, idfuncionario, escolhido) VALUES (2, '2019-09-26',  3, 4, 0);
+INSERT INTO voto(id, data, idrestaurante, idfuncionario, escolhido) VALUES (3, '2019-09-26',  2, 2, 0);
 

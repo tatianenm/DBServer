@@ -1,5 +1,7 @@
 package com.tatiane;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,24 +23,28 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tatiane.model.Funcionario;
 import com.tatiane.model.Restaurante;
-import com.tatiane.model.Votacao;
-import com.tatiane.service.VotacaoService;
+import com.tatiane.model.Voto;
+import com.tatiane.model.dto.VotoDto;
+import com.tatiane.service.VotoService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class VotacaoControllerTest {
+public class VotoControllerTest {
 
 	private MockMvc mockMvc;
 
 	@MockBean
-	private VotacaoService votacaoService;
+	private VotoService votoService;
 
 	@Autowired
 	private WebApplicationContext context;
@@ -51,8 +57,8 @@ public class VotacaoControllerTest {
 	}
 
 	@Test
-	public void getVotacoesTest() throws Exception {
-		Mockito.when(votacaoService.findAll()).thenReturn(Arrays.asList(mockVotacao()));
+	public void getVotosTest() throws Exception {
+		Mockito.when(votoService.findAll()).thenReturn(Arrays.asList(mockVoto()));
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/votacao").accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		String expected = "[{\"id\":1,\"data\":\"2015-11-23T02:00:00.000+0000\",\"restaurante\":{\"id\":1,\"nome\":null,\"endereco\":null},"
@@ -72,9 +78,9 @@ public class VotacaoControllerTest {
 		funcionario.setId(1);
 		return funcionario;
 	}
-
-	private Votacao mockVotacao() {
-		return new Votacao(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.TRUE);
+	
+	private Voto mockVoto() {
+		return new Voto(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.TRUE);
 	}
 
 	private Date formataData() {
@@ -90,16 +96,16 @@ public class VotacaoControllerTest {
 
 	@Test
 	public void salvarVotoRestauranteTest() throws Exception {
-		Mockito.when(votacaoService.votar(1, 2)).thenReturn(mockSalvarVotacao());
+		Mockito.when(votoService.votar(1, 2)).thenReturn(mockSalvarVoto());
 		 mockMvc.perform(post("/votacao/votar")
 	     .contentType("application/json")
-	     .content(om.writeValueAsString(mockSalvarVotacao())))
+	     .content(om.writeValueAsString(mockSalvarVoto())))
 		 .andExpect(status().is2xxSuccessful());
 
 	}
 
-	private Votacao mockSalvarVotacao() {
-		Votacao votacao = new Votacao();
+	private Voto mockSalvarVoto() {
+		Voto votacao = new Voto();
 		votacao.setData(formataData());
 		votacao.setRestaurante(mockRestaurante());
 		votacao.setEscolhido(false);

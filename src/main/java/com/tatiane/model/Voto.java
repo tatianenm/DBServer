@@ -22,8 +22,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "votacao")
-public class Votacao implements Serializable {
+@Table(name = "voto")
+public class Voto implements Serializable {
 
 	private static final long serialVersionUID = -6522011289963747955L;
 
@@ -48,13 +48,13 @@ public class Votacao implements Serializable {
     private Boolean escolhido;
 
 
-    public Votacao(Integer id, Date data, Restaurante restaurante, Funcionario funcionario, Boolean escolhido) {
+    public Voto(Integer id, Date data, Restaurante restaurante, Funcionario funcionario, Boolean escolhido) {
         super();
         this.id = id;
         this.data = data;
         this.restaurante = restaurante;
         this.funcionario = funcionario;
-        this.escolhido = escolhido;
+        this.escolhido = Boolean.FALSE;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class Votacao implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Votacao other = (Votacao) obj;
+        Voto other = (Voto) obj;
         if (id == null) {
             if (other.id != null) {
                 return false;

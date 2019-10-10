@@ -1,9 +1,9 @@
 package com.tatiane.controller;
 
-import com.tatiane.model.Votacao;
-import com.tatiane.model.dto.VotacaoDto;
+import com.tatiane.model.Voto;
+import com.tatiane.model.dto.VotoDto;
 import com.tatiane.model.dto.VotarDto;
-import com.tatiane.service.VotacaoService;
+import com.tatiane.service.VotoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,56 +27,56 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(value = "API Restaurante")
 @RestController
-@RequestMapping("/votacao")
-public class VotacaoController {
+@RequestMapping("/voto")
+public class VotoController {
 
-	private Logger logger = LoggerFactory.getLogger(VotacaoController.class);
+	private Logger logger = LoggerFactory.getLogger(VotoController.class);
 
-	private VotacaoService votacaoService;
+	private VotoService votoService;
 
 	@Autowired
-	public VotacaoController(VotacaoService votacaoService) {
-		this.votacaoService = votacaoService;
+	public VotoController(VotoService votacaoService) {
+		this.votoService = votacaoService;
 	}
 
-	@ApiOperation(value = "Retorna uma lista de votacao")
+	@ApiOperation(value = "Retorna uma lista de voto")
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<Votacao>> findAll() {
-		return ResponseEntity.ok(votacaoService.findAll());
+	public ResponseEntity<List<Voto>> findAll() {
+		return ResponseEntity.ok(votoService.findAll());
 	}
 
 	@ApiOperation(value = "Resultado da votação")
-	@GetMapping("/restaurante/mostrarResultadoVotacao")
-	public ResponseEntity<Votacao> mostrarResultadoVotacao() {
-		VotacaoDto dto = votacaoService.retornaResultadoVotacao(new Date());
-		return ResponseEntity.ok(converteParaVotacao(dto));
+	@GetMapping(path="/restaurante/mostrarResultadoVotacao",
+	            produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<Voto> mostrarResultadoVotacao() {
+		return ResponseEntity.ok(converteParaVoto(votoService.retornaResultadoVotacao(new Date())));
 	}
 
-	@ApiOperation(value = "Salvar votação")
+	@ApiOperation(value = "Salvar voto")
 	@PostMapping(path = "/votar", 
 	             produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
 	             consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseStatus(HttpStatus.CREATED)
-	public Votacao salvarVotoRestaurante(@RequestBody VotarDto votarDto) throws Exception  {			
-		return votacaoService.votar(votarDto.getIdRestaurante(), votarDto.getIdFuncionario());		
+	public Voto salvarVotoRestaurante(@RequestBody VotarDto votarDto) throws Exception   {			
+		return votoService.votar(votarDto.getIdRestaurante(), votarDto.getIdFuncionario());		
 	}
 	
 
-	private Votacao converteParaVotacao(VotacaoDto dto) {
-		Votacao votacao = new Votacao();
-		votacao.setData(dto.getData());
-		votacao.setRestaurante(dto.getRestaurante());
-		votacao.setEscolhido(true);
-		return votacao;
+	private Voto converteParaVoto(VotoDto dto) {
+		Voto voto = new Voto();
+		voto.setData(dto.getData());
+		voto.setRestaurante(dto.getRestaurante());
+		voto.setEscolhido(true);
+		return voto;
 	}
 	
-	@ApiOperation(value = "Excluir votação")
+	@ApiOperation(value = "Excluir voto")
 	@DeleteMapping(path = "/{id}",
 	               produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity excluirVotacao(@ApiParam(name = "id", value = "Votação id", required = true )
-	                                     @PathVariable(value = "id", required = true) Integer id ) {
-		votacaoService.excluir(id);
+	public ResponseEntity excluirVoto(@ApiParam(name = "id", value = "Voto id", required = true )
+	                                  @PathVariable(value = "id", required = true) Integer id ) {
+		votoService.excluir(id);
 		return ResponseEntity.ok().build();
-	} 
+	} 	
 
 }

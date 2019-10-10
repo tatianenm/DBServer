@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VotacaoDto implements Comparable<VotacaoDto>{
+public class VotoDto implements Comparable<VotoDto>{
 
 	private Restaurante restaurante;
 	
@@ -18,7 +18,7 @@ public class VotacaoDto implements Comparable<VotacaoDto>{
 	private Integer quantidadeVotos;
 
 	@Override
-	public int compareTo(VotacaoDto arg0) {
+	public int compareTo(VotoDto arg0) {
 		return this.getQuantidadeVotos().compareTo(arg0.getQuantidadeVotos());
 	}
 
@@ -38,7 +38,7 @@ public class VotacaoDto implements Comparable<VotacaoDto>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		VotacaoDto other = (VotacaoDto) obj;
+		VotoDto other = (VotoDto) obj;
 		if (restaurante == null) {
 			if (other.restaurante != null)
 				return false;
