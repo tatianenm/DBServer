@@ -59,7 +59,7 @@ public class VotoControllerTest {
 	@Test
 	public void getVotosTest() throws Exception {
 		Mockito.when(votoService.findAll()).thenReturn(Arrays.asList(mockVoto()));
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/votacao").accept(MediaType.APPLICATION_JSON);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/voto").accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		String expected = "[{\"id\":1,\"data\":\"2015-11-23T02:00:00.000+0000\",\"restaurante\":{\"id\":1,\"nome\":null,\"endereco\":null},"
 				+ "\"funcionario\":{\"id\":1,\"nome\":null,\"senha\":null,\"user\":null},\"escolhido\":true}]";
@@ -97,7 +97,7 @@ public class VotoControllerTest {
 	@Test
 	public void salvarVotoRestauranteTest() throws Exception {
 		Mockito.when(votoService.votar(1, 2)).thenReturn(mockSalvarVoto());
-		 mockMvc.perform(post("/votacao/votar")
+		 mockMvc.perform(post("/voto/votar")
 	     .contentType("application/json")
 	     .content(om.writeValueAsString(mockSalvarVoto())))
 		 .andExpect(status().is2xxSuccessful());
@@ -105,12 +105,12 @@ public class VotoControllerTest {
 	}
 
 	private Voto mockSalvarVoto() {
-		Voto votacao = new Voto();
-		votacao.setData(formataData());
-		votacao.setRestaurante(mockRestaurante());
-		votacao.setEscolhido(false);
-		votacao.setFuncionario(mockFuncionario());
-		return votacao;
+		Voto voto = new Voto();
+		voto.setData(formataData());
+		voto.setRestaurante(mockRestaurante());
+		voto.setEscolhido(false);
+		voto.setFuncionario(mockFuncionario());
+		return voto;
 	}
 
 }

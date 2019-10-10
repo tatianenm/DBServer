@@ -14,7 +14,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests().
                 antMatchers("/retaurante").hasAnyRole("PG_RESTAURANTE").
                 antMatchers("/funcionario").hasAnyRole("PG_FUNCIONARIO").
-                antMatchers("/votacao").hasAnyRole("PG_VOTACAO").
+                antMatchers("/voto").hasAnyRole("PG_VOTACAO").
                 anyRequest().
                 authenticated().
                 and().formLogin();
