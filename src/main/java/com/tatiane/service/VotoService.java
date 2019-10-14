@@ -86,13 +86,7 @@ public class VotoService {
 					dtos.add(dto);
 				}
 			});
-		}		
-		   
-			 if(verificaSeRestauranteJaFoiEscolhidoNaSemana(dtos.stream()
-					   .max((VotoDto o1, VotoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos())).get())){
-				 throw new VotoNotFoundException(MSG_RESTAURANTE_REPETIDO, null);
-			 }
-			
+		}			
 		
 		 return dtos.stream()
 				   .max((VotoDto o1, VotoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos()))
@@ -103,11 +97,5 @@ public class VotoService {
 		logger.debug( id + "voto removido" );
 		votoRepository.deleteById(id);		
 	}
-	
-    private boolean verificaSeRestauranteJaFoiEscolhidoNaSemana(VotoDto dto) {
-	return Optional.ofNullable(votoRepository.verificaSeRestauranteJaFoiEscolhidoNaSemana(dto.getRestaurante().getId(),
-			                   DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.MONDAY),
-				               DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.FRIDAY))).isPresent();
-	}	
-	
+	   
 }
