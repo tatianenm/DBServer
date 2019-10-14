@@ -61,7 +61,7 @@ public class RestauranteController {
 		 return ResponseEntity.ok(restauranteService.findOne(id));		
 	}
 	
-	@ApiOperation(value = "Cadastro Funcionário")
+	@ApiOperation(value = "Cadastro Restaurante")
 	@PostMapping(path = "/cadastroRestaurante",
 	             consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE },
 	             produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
