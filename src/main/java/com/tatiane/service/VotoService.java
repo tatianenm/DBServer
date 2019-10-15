@@ -107,10 +107,11 @@ public class VotoService {
 
 	
     private List<Voto> verificaSeRestauranteJaFoiEscolhidoNaSemana(VotoDto dto) {
-	  return votoRepository.verificaSeRestauranteJaFoiEscolhidoNaSemana(dto.getRestaurante().getId(),
+    	List<Voto> votos =
+	   votoRepository.verificaSeRestauranteJaFoiEscolhidoNaSemana(dto.getRestaurante().getId(),
 			                   converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.MONDAY)),
-				               converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.FRIDAY))) ;
-
+				               converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.FRIDAY)));
+return votos;
 	}	
     
     private Date converteParaDate(LocalDate localDate) {
