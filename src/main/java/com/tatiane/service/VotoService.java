@@ -47,7 +47,7 @@ public class VotoService {
 		return votoRepository.findById(id);
 	}
 
-	public Voto votar(Integer idRestaurante, Integer idFuncionario) throws Exception  {
+	public Voto votar(Integer idRestaurante, Integer idFuncionario)   {
 
 		Funcionario funcionario = new Funcionario();
 		funcionario.setId(idFuncionario);
@@ -55,7 +55,7 @@ public class VotoService {
 		restaurante.setId(idRestaurante);
 
 		if (verificaSeFuncionarioJaVotouRestauranteMesmoDia(funcionario, new Date(), restaurante)) {
-			throw new VotoNotFoundException(MSG_VOTO_REPETIDO, null);
+			throw new VotoNotFoundException(MSG_VOTO_REPETIDO);
 		}
 		Voto voto = new Voto();
 		voto.setData(new Date());
@@ -89,16 +89,15 @@ public class VotoService {
 				}
 			});
 		}	
-		
-	if(verificaSeRestauranteJaFoiEscolhidoNaSemana(dtos.stream()
-				   .max((VotoDto o1, VotoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos()))
-				   .get()).size() > 0) {
-		throw new VotoNotFoundException(MSG_RESTAURANTE_REPETIDO, null);
-	}
-		
-		 return dtos.stream()
+		VotoDto voto =dtos.stream()
 				   .max((VotoDto o1, VotoDto o2) -> o1.getQuantidadeVotos().compareTo(o2.getQuantidadeVotos()))
 				   .get(); 
+		
+		if(verificaSeRestauranteJaFoiEscolhidoNaSemana(voto).size() > 0) {
+			throw new VotoNotFoundException(MSG_RESTAURANTE_REPETIDO +"Id: " + voto.getRestaurante().getId() + " "+ voto.getRestaurante().getNome());
+		}
+		
+		return voto;
 	}
 
 	public void excluir(Integer id) {

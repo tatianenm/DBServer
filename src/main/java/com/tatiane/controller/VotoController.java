@@ -57,7 +57,7 @@ public class VotoController {
 	             produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, 
 	             consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseStatus(HttpStatus.CREATED)
-	public Voto salvarVotoRestaurante(@RequestBody VotarDto votarDto) throws Exception   {			
+	public Voto salvarVotoRestaurante(@RequestBody VotarDto votarDto)  {			
 		return votoService.votar(votarDto.getIdRestaurante(), votarDto.getIdFuncionario());		
 	}	
 
