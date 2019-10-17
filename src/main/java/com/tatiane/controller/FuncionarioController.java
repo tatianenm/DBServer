@@ -1,73 +1,61 @@
 package com.tatiane.controller;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.tatiane.model.Funcionario;
 import com.tatiane.service.FuncionarioService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Api(value="API Restaurante")
+import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+
+@Api(value = "API Restaurante")
 @RestController
 @RequestMapping("/funcionario")
 public class FuncionarioController {
-	
-    private Logger logger = LoggerFactory.getLogger(FuncionarioController.class);
-	
-	private FuncionarioService funcionarioService;
-	
+
+    private FuncionarioService funcionarioService;
+
     @Autowired
-	public FuncionarioController(FuncionarioService funcionarioService) {
-		this.funcionarioService = funcionarioService;
-	}
-    
-    @ApiOperation(value= "Retorna uma lista de funcionários")
-	@GetMapping( produces = { MediaType.APPLICATION_JSON_UTF8_VALUE } )
-    public ResponseEntity<List<Funcionario>> findAll(){
-    	return ResponseEntity.ok(funcionarioService.findAll());
+    public FuncionarioController(FuncionarioService funcionarioService) {
+        this.funcionarioService = funcionarioService;
     }
-    
+
+    @ApiOperation(value = "Retorna uma lista de funcionários")
+    @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<List<Funcionario>> findAll() {
+        return ResponseEntity.ok(funcionarioService.findAll());
+    }
+
     @ApiOperation(value = "Excluir funcionário")
-	@DeleteMapping(path = "/{id}",
-	               produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity excluirFuncionario(@ApiParam(name = "id", value = "Funcionário id", required = true )
-	                                         @PathVariable(value = "id", required = true) Integer id ) {
-		funcionarioService.excluirFuncionario(id);
-		return ResponseEntity.ok().build();
-	} 
-    
+    @DeleteMapping(path = "/{id}",
+            produces = {APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity excluirFuncionario(@ApiParam(name = "id", value = "Funcionário id", required = true)
+                                             @PathVariable(value = "id") Integer id) {
+        funcionarioService.excluirFuncionario(id);
+        return ResponseEntity.ok().build();
+    }
+
     @ApiOperation(value = "Pesquisar funcionários")
     @GetMapping(path = "/{nome}",
-                produces = { MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<List<Funcionario>> pesquisarFuncionarioPeloNome(@ApiParam(name = "nome", value = "Funcionário nome", required = true )
-                                                                          @PathVariable(value = "nome", required = true) String nome){
-    	return ResponseEntity.ok(funcionarioService.pesquisarFuncionarioPeloNome(nome));
+            produces = {APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<List<Funcionario>> pesquisarFuncionarioPeloNome(@ApiParam(name = "nome", value = "Funcionário nome", required = true)
+                                                                          @PathVariable(value = "nome") String nome) {
+        return ResponseEntity.ok(funcionarioService.pesquisarFuncionarioPeloNome(nome));
     }
-    
+
     @ApiOperation(value = "Cadastro de Funcionário")
-    @PostMapping(path="/cadastroFuncionario",
-                 produces = { MediaType.APPLICATION_JSON_UTF8_VALUE},
-                 consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE})
+    @PostMapping(path = "/cadastroFuncionario",
+            produces = {APPLICATION_JSON_UTF8_VALUE},
+            consumes = {APPLICATION_JSON_UTF8_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public Funcionario cadastroFuncionario(@RequestBody Funcionario funcionario) {    	
-		return funcionarioService.cadastroFuncionario(funcionario);    	
+    public Funcionario cadastroFuncionario(@RequestBody Funcionario funcionario) {
+        return funcionarioService.cadastroFuncionario(funcionario);
     }
-	
+
 }

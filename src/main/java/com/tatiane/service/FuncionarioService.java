@@ -1,21 +1,16 @@
 package com.tatiane.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.tatiane.exception.FuncionarioNotFoundException;
 import com.tatiane.model.Funcionario;
 import com.tatiane.repository.FuncionarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FuncionarioService {
-	
-    private static Logger logger = LoggerFactory.getLogger(FuncionarioService.class);
 	
 	private FuncionarioRepository funcionarioRepository;
 
@@ -32,7 +27,6 @@ public class FuncionarioService {
 	}	
 	
 	public void excluirFuncionario(Integer id) {
-		logger.debug( id + "funcionário removido");
 		funcionarioRepository.deleteById(id);
 	} 
 	
