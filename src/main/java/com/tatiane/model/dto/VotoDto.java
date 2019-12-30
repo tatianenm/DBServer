@@ -4,11 +4,15 @@ import java.util.Date;
 
 import com.tatiane.model.Restaurante;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class VotoDto implements Comparable<VotoDto>{
 
 	private Restaurante restaurante;
