@@ -1,12 +1,13 @@
 package com.tatiane.voto.service;
 
-import com.tatiane.voto.exception.VotoNotFoundException;
 import com.tatiane.funcionario.model.Funcionario;
-import com.tatiane.restaurante.model.Restaurante;
-import com.tatiane.voto.model.Voto;
-import com.tatiane.voto.dto.VotoDto;
-import com.tatiane.voto.repository.VotoRepository;
+import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.util.DateUtil;
+import com.tatiane.voto.dto.VotoDto;
+import com.tatiane.voto.exception.VotoNotFoundException;
+import com.tatiane.voto.model.Voto;
+import com.tatiane.voto.repository.VotoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -23,6 +24,7 @@ public class VotoService {
 
     private VotoRepository votoRepository;
 
+    @Autowired
     public VotoService(VotoRepository votoRepository) {
         this.votoRepository = votoRepository;
     }
@@ -42,7 +44,7 @@ public class VotoService {
 
         Funcionario funcionario = new Funcionario();
         funcionario.setId(idFuncionario);
-        Restaurante restaurante = new Restaurante();
+        RestauranteEntity restaurante = new RestauranteEntity();
         restaurante.setId(idRestaurante);
 
         if (verificaSeFuncionarioJaVotouRestauranteMesmoDia(funcionario, new Date(), restaurante)) {
@@ -57,7 +59,7 @@ public class VotoService {
 
     }
 
-    private boolean verificaSeFuncionarioJaVotouRestauranteMesmoDia(Funcionario funcionario, Date data, Restaurante restaurante) {
+    private boolean verificaSeFuncionarioJaVotouRestauranteMesmoDia(Funcionario funcionario, Date data, RestauranteEntity restaurante) {
         return Optional.ofNullable(votoRepository.findByFuncionarioAndDataAndRestaurante(funcionario, data, restaurante)).isPresent();
     }
 
@@ -67,7 +69,7 @@ public class VotoService {
 
         if (votacoes != null) {
             votacoes.forEach(voto -> {
-                Restaurante r = voto.getRestaurante();
+                RestauranteEntity r = voto.getRestaurante();
                 VotoDto dto = new VotoDto();
                 dto.setRestaurante(r);
                 dto.setQuantidadeVotos(1);

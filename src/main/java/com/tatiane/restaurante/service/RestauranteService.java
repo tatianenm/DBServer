@@ -5,6 +5,7 @@ import com.tatiane.restaurante.dto.RestauranteDTO;
 import com.tatiane.restaurante.exception.RestauranteNotFoundException;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.restaurante.repository.RestauranteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class RestauranteService {
 
     private RestauranteConverter restauranteConverter;
 
+    @Autowired
     public RestauranteService(RestauranteRepository restauranteRepository, RestauranteConverter restauranteConverter) {
         this.restauranteRepository = restauranteRepository;
         this.restauranteConverter = restauranteConverter;

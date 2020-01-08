@@ -1,16 +1,15 @@
 package com.tatiane.voto.repository;
 
 
-import java.util.Date;
-import java.util.List;
-
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.restaurante.model.RestauranteEntity;
+import com.tatiane.voto.model.Voto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.tatiane.funcionario.model.Funcionario;
-import com.tatiane.restaurante.model.Restaurante;
-import com.tatiane.voto.model.Voto;
+import java.util.Date;
+import java.util.List;
 
 public interface VotoRepository extends JpaRepository<Voto, Integer> {
 	
@@ -20,7 +19,7 @@ public interface VotoRepository extends JpaRepository<Voto, Integer> {
 			                                         @Param("dtInicio") Date dtInicio,
 			                                         @Param("dtFim") Date dtFim);
 	
-	Voto findByFuncionarioAndDataAndRestaurante(Funcionario funcionario, Date data, Restaurante restaurante);
+	Voto findByFuncionarioAndDataAndRestaurante(Funcionario funcionario, Date data, RestauranteEntity restaurante);
 	
 	List<Voto> findByData(Date data); 
 }

@@ -1,7 +1,7 @@
 package com.tatiane;
 
-import java.util.Arrays;
-
+import com.tatiane.restaurante.model.RestauranteEntity;
+import com.tatiane.restaurante.service.RestauranteService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.tatiane.restaurante.model.Restaurante;
-import com.tatiane.restaurante.service.RestauranteService;
+import java.util.Arrays;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,7 +41,7 @@ public class RestauranteControllerTest {
 	
 	@Test
 	public void getRestaurantesTest() throws Exception {
-		Restaurante mockRestaurante = new Restaurante(1, "xxxx", "cccc");
+		RestauranteEntity mockRestaurante = new RestauranteEntity(1, "xxxx", "cccc");
 		
 		Mockito.when(restauranteService.findAll()).thenReturn(Arrays.asList(mockRestaurante));
 		

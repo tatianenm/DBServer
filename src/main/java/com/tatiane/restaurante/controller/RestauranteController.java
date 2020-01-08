@@ -2,7 +2,7 @@ package com.tatiane.restaurante.controller;
 
 import com.tatiane.restaurante.converter.RestauranteConverter;
 import com.tatiane.restaurante.dto.RestauranteDTO;
-import com.tatiane.restaurante.model.Restaurante;
+import com.tatiane.restaurante.exception.RestauranteNotFoundException;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.restaurante.service.RestauranteService;
 import io.swagger.annotations.Api;
@@ -15,7 +15,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
@@ -37,7 +39,14 @@ public class RestauranteController {
     @ApiOperation(value = "Retorna uma lista de restaurantes")
     @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<List<RestauranteDTO>> findAll() {
-        return ResponseEntity.ok(restauranteService.findAll());
+        List<RestauranteDTO> restaurantes = new ArrayList<>();
+        restauranteService.findAll().forEach(restauranteEntity -> {
+            restaurantes.add(restauranteConverter.converteParaRestauranteDTO(restauranteEntity));
+        });
+        if (Objects.isNull(restaurantes)) {
+            throw new RestauranteNotFoundException();
+        }
+        return ResponseEntity.ok(restaurantes);
     }
 
     @ApiOperation(value = "Excluir restaurante")
@@ -50,8 +59,7 @@ public class RestauranteController {
     }
 
     @ApiOperation(value = "Pesquisar Restaurante")
-    @GetMapping(path = "/{id}",
-            produces = {APPLICATION_JSON_UTF8_VALUE})
+    @GetMapping(path = "/{id}", produces = {APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<RestauranteDTO> pesquisarRestaurantePeloId(@PathVariable(value = "id", required = true) Integer id) {
         return ResponseEntity.ok(restauranteConverter.converteParaRestauranteDTO(restauranteService.findById(id)));
     }

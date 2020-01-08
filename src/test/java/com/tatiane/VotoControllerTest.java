@@ -1,13 +1,10 @@
 package com.tatiane;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.restaurante.model.RestauranteEntity;
+import com.tatiane.voto.model.Voto;
+import com.tatiane.voto.service.VotoService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,11 +22,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tatiane.funcionario.model.Funcionario;
-import com.tatiane.restaurante.model.Restaurante;
-import com.tatiane.voto.model.Voto;
-import com.tatiane.voto.service.VotoService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -61,8 +60,8 @@ public class VotoControllerTest {
 		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
 	}
 
-	private Restaurante mockRestaurante() {
-		Restaurante restaurante = new Restaurante();
+	private RestauranteEntity mockRestaurante() {
+		RestauranteEntity restaurante = new RestauranteEntity();
 		restaurante.setId(1);
 		return restaurante;
 	}

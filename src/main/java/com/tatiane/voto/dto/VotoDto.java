@@ -1,13 +1,12 @@
 package com.tatiane.voto.dto;
 
-import java.util.Date;
-
-import com.tatiane.restaurante.model.Restaurante;
-
+import com.tatiane.restaurante.model.RestauranteEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VotoDto implements Comparable<VotoDto>{
 
-	private Restaurante restaurante;
+	private RestauranteEntity restaurante;
 	
 	private Date data;
 	
