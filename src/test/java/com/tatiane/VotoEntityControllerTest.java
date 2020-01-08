@@ -3,7 +3,7 @@ package com.tatiane;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.model.RestauranteEntity;
-import com.tatiane.voto.model.Voto;
+import com.tatiane.voto.model.VotoEntity;
 import com.tatiane.voto.service.VotoService;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class VotoControllerTest {
+public class VotoEntityControllerTest {
 
 	private MockMvc mockMvc;
 
@@ -72,8 +72,8 @@ public class VotoControllerTest {
 		return funcionario;
 	}
 	
-	private Voto mockVoto() {
-		return new Voto(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.FALSE);
+	private VotoEntity mockVoto() {
+		return new VotoEntity(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.FALSE);
 	}
 
 	private Date formataData() {
@@ -97,13 +97,13 @@ public class VotoControllerTest {
 
 	}
 
-	private Voto mockSalvarVoto() {
-		Voto voto = new Voto();
-		voto.setData(formataData());
-		voto.setRestaurante(mockRestaurante());
-		voto.setEscolhido(false);
-		voto.setFuncionario(mockFuncionario());
-		return voto;
+	private VotoEntity mockSalvarVoto() {
+		VotoEntity votoEntity = new VotoEntity();
+		votoEntity.setData(formataData());
+		votoEntity.setRestaurante(mockRestaurante());
+		votoEntity.setEscolhido(false);
+		votoEntity.setFuncionario(mockFuncionario());
+		return votoEntity;
 	}
 
 }

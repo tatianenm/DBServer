@@ -2,20 +2,31 @@ package com.tatiane.voto.model;
 
 import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.model.RestauranteEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+
+import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "voto")
-public class Voto implements Serializable {
+public class VotoEntity implements Serializable {
 
 	private static final long serialVersionUID = -6522011289963747955L;
 
@@ -24,9 +35,8 @@ public class Voto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "data")
-    private Date data;
+    private LocalDate data;
 
     @ManyToOne
     @JoinColumn(name = "idrestaurante")
@@ -40,7 +50,7 @@ public class Voto implements Serializable {
     private Boolean escolhido;
 
 
-    public Voto(Integer id, Date data, RestauranteEntity restaurante, FuncionarioEntity funcionario, Boolean escolhido) {
+    public VotoEntity(Integer id, LocalDate data, RestauranteEntity restaurante, FuncionarioEntity funcionario, Boolean escolhido) {
         super();
         this.id = id;
         this.data = data;
@@ -68,7 +78,7 @@ public class Voto implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Voto other = (Voto) obj;
+        VotoEntity other = (VotoEntity) obj;
         if (id == null) {
             if (other.id != null) {
                 return false;

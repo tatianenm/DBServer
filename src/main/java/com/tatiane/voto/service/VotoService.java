@@ -3,9 +3,10 @@ package com.tatiane.voto.service;
 import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.util.DateUtil;
+import com.tatiane.voto.converter.VotoConverter;
 import com.tatiane.voto.dto.VotoDto;
 import com.tatiane.voto.exception.VotoNotFoundException;
-import com.tatiane.voto.model.Voto;
+import com.tatiane.voto.model.VotoEntity;
 import com.tatiane.voto.repository.VotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,23 +25,26 @@ public class VotoService {
 
     private VotoRepository votoRepository;
 
+    private VotoConverter votoConverter;
+
     @Autowired
-    public VotoService(VotoRepository votoRepository) {
+    public VotoService(VotoRepository votoRepository, VotoConverter votoConverter) {
         this.votoRepository = votoRepository;
+        this.votoConverter = votoConverter;
     }
 
-    public List<Voto> findAll() {
+    public List<VotoEntity> findAll() {
         return votoRepository.findAll()
                 .stream()
                 .sorted((v1, v2) -> v2.getData().compareTo(v1.getData()))
                 .collect(Collectors.toList());
     }
 
-    public Optional<Voto> findOne(Integer id) {
+    public Optional<VotoEntity> findById(Integer id) {
         return votoRepository.findById(id);
     }
 
-    public Voto votar(Integer idRestaurante, Integer idFuncionario) {
+    public VotoEntity votar(Integer idRestaurante, Integer idFuncionario) {
 
         FuncionarioEntity funcionario = new FuncionarioEntity();
         funcionario.setId(idFuncionario);
@@ -50,12 +54,12 @@ public class VotoService {
         if (verificaSeFuncionarioJaVotouRestauranteMesmoDia(funcionario, new Date(), restaurante)) {
             throw new VotoNotFoundException(MSG_VOTO_REPETIDO);
         }
-        Voto voto = new Voto();
-        voto.setData(new Date());
-        voto.setFuncionario(funcionario);
-        voto.setRestaurante(restaurante);
-        voto.setEscolhido(false);
-        return votoRepository.save(voto);
+        VotoEntity votoEntity = new VotoEntity();
+        votoEntity.setData(LocalDate.now());
+        votoEntity.setFuncionario(funcionario);
+        votoEntity.setRestaurante(restaurante);
+        votoEntity.setEscolhido(false);
+        return votoRepository.save(votoEntity);
 
     }
 
@@ -64,7 +68,7 @@ public class VotoService {
     }
 
     public VotoDto retornaResultadoVotacao(Date data) {
-        List<Voto> votacoes = votoRepository.findByData(data);
+        List<VotoEntity> votacoes = votoRepository.findByData(data);
         List<VotoDto> dtos = new ArrayList<>();
 
         if (votacoes != null) {
@@ -98,7 +102,7 @@ public class VotoService {
     }
 
 
-    private List<Voto> verificaSeRestauranteJaFoiEscolhidoNaSemana(VotoDto dto) {
+    private List<VotoEntity> verificaSeRestauranteJaFoiEscolhidoNaSemana(VotoDto dto) {
         return votoRepository.verificaSeRestauranteJaFoiEscolhidoNaSemana(dto.getRestaurante().getId(),
                 converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.MONDAY)),
                 converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.FRIDAY)));
