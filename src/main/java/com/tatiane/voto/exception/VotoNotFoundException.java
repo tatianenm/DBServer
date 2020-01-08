@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class VotoNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	
-	public VotoNotFoundException(String message, Throwable cause) {
-		super(message, cause);
-	}
+
+	public static final String MSG_FUNCIONARIO_NAO_ENCONTRADO = "Funcionário não foi encontrado.";
 
 	public VotoNotFoundException() {
-		super("Funcionário não foi encontrado.");
+		super(MSG_FUNCIONARIO_NAO_ENCONTRADO);
 	}
 
 }

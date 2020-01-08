@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,11 +64,11 @@ public class VotoController {
     @PostMapping(path = "/votar",
             produces = {APPLICATION_JSON_UTF8_VALUE},
             consumes = {APPLICATION_JSON_UTF8_VALUE})
-    public VotoEntity salvarVotoRestaurante(@RequestBody @Valid VotarDto votarDto) {
-        return votoService.votar(votarDto);
+    public ResponseEntity<VotarDto> salvarVotoRestaurante(@RequestBody @Valid VotarDto votarDto, UriComponentsBuilder uriBuilder) {
+        VotoEntity votoEntity = votoService.votar(votarDto);
+        URI uri = uriBuilder.path("/voto/{id}").buildAndExpand(votoEntity.getId()).toUri();
+        return ResponseEntity.created(uri).body(votoConverter.converteParaVotarDto(votoEntity)) ;
     }
-
-
 
     @ApiOperation(value = "Excluir voto")
     @DeleteMapping(path = "/{id}",
