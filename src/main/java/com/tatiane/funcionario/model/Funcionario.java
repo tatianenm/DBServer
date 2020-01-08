@@ -1,4 +1,4 @@
-package com.tatiane.model;
+package com.tatiane.funcionario.model;
 
 import java.io.Serializable;
 

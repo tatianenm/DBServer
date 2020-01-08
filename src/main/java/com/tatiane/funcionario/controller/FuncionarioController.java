@@ -1,7 +1,7 @@
-package com.tatiane.controller;
+package com.tatiane.funcionario.controller;
 
-import com.tatiane.model.Funcionario;
-import com.tatiane.service.FuncionarioService;
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.funcionario.service.FuncionarioService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

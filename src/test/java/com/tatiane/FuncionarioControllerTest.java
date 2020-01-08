@@ -18,8 +18,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.tatiane.model.Funcionario;
-import com.tatiane.service.FuncionarioService;
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.funcionario.service.FuncionarioService;
 
 
 @RunWith(SpringRunner.class)

@@ -1,4 +1,4 @@
-package com.tatiane.model;
+package com.tatiane.voto.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.restaurante.model.Restaurante;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

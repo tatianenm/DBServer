@@ -1,8 +1,8 @@
-package com.tatiane.model.dto;
+package com.tatiane.voto.dto;
 
 import java.util.Date;
 
-import com.tatiane.model.Restaurante;
+import com.tatiane.restaurante.model.Restaurante;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

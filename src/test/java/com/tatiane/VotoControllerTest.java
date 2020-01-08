@@ -26,10 +26,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tatiane.model.Funcionario;
-import com.tatiane.model.Restaurante;
-import com.tatiane.model.Voto;
-import com.tatiane.service.VotoService;
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.restaurante.model.Restaurante;
+import com.tatiane.voto.model.Voto;
+import com.tatiane.voto.service.VotoService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

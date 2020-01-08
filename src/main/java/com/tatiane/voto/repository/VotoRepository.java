@@ -1,4 +1,4 @@
-package com.tatiane.repository;
+package com.tatiane.voto.repository;
 
 
 import java.util.Date;
@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.tatiane.model.Funcionario;
-import com.tatiane.model.Restaurante;
-import com.tatiane.model.Voto;
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.restaurante.model.Restaurante;
+import com.tatiane.voto.model.Voto;
 
 public interface VotoRepository extends JpaRepository<Voto, Integer> {
 	

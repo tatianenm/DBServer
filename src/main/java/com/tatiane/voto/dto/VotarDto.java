@@ -1,4 +1,4 @@
-package com.tatiane.model.dto;
+package com.tatiane.voto.dto;
 
 import java.io.Serializable;
 

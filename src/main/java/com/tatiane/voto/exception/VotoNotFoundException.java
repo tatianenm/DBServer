@@ -1,4 +1,4 @@
-package com.tatiane.exception;
+package com.tatiane.voto.exception;
 
 public class VotoNotFoundException extends RuntimeException {
 

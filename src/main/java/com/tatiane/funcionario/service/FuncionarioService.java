@@ -1,8 +1,8 @@
-package com.tatiane.service;
+package com.tatiane.funcionario.service;
 
-import com.tatiane.exception.FuncionarioNotFoundException;
-import com.tatiane.model.Funcionario;
-import com.tatiane.repository.FuncionarioRepository;
+import com.tatiane.funcionario.exception.FuncionarioNotFoundException;
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.funcionario.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

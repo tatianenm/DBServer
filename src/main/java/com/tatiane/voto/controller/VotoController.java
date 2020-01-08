@@ -1,9 +1,9 @@
-package com.tatiane.controller;
+package com.tatiane.voto.controller;
 
-import com.tatiane.model.Voto;
-import com.tatiane.model.dto.VotarDto;
-import com.tatiane.model.dto.VotoDto;
-import com.tatiane.service.VotoService;
+import com.tatiane.voto.model.Voto;
+import com.tatiane.voto.dto.VotarDto;
+import com.tatiane.voto.dto.VotoDto;
+import com.tatiane.voto.service.VotoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

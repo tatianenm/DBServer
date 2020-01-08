@@ -1,4 +1,4 @@
-package com.tatiane.exception;
+package com.tatiane.funcionario.exception;
 
 public class FuncionarioNotFoundException  extends RuntimeException{
 

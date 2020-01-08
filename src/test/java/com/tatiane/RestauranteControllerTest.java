@@ -2,7 +2,6 @@ package com.tatiane;
 
 import java.util.Arrays;
 
-import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +19,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.tatiane.model.Restaurante;
-import com.tatiane.service.RestauranteService;
+import com.tatiane.restaurante.model.Restaurante;
+import com.tatiane.restaurante.service.RestauranteService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,11 +1,11 @@
-package com.tatiane.service;
+package com.tatiane.voto.service;
 
-import com.tatiane.exception.VotoNotFoundException;
-import com.tatiane.model.Funcionario;
-import com.tatiane.model.Restaurante;
-import com.tatiane.model.Voto;
-import com.tatiane.model.dto.VotoDto;
-import com.tatiane.repository.VotoRepository;
+import com.tatiane.voto.exception.VotoNotFoundException;
+import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.restaurante.model.Restaurante;
+import com.tatiane.voto.model.Voto;
+import com.tatiane.voto.dto.VotoDto;
+import com.tatiane.voto.repository.VotoRepository;
 import com.tatiane.util.DateUtil;
 import org.springframework.stereotype.Service;
 
