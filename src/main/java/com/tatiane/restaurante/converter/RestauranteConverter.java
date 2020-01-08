@@ -2,7 +2,9 @@ package com.tatiane.restaurante.converter;
 
 import com.tatiane.restaurante.dto.RestauranteDTO;
 import com.tatiane.restaurante.model.RestauranteEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RestauranteConverter {
 
     public RestauranteEntity converteParaRestaurante(RestauranteDTO restauranteDTO) {
