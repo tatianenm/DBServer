@@ -1,7 +1,7 @@
 package com.tatiane;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.voto.model.Voto;
 import com.tatiane.voto.service.VotoService;
@@ -66,8 +66,8 @@ public class VotoControllerTest {
 		return restaurante;
 	}
 
-	private Funcionario mockFuncionario() {
-		Funcionario funcionario = new Funcionario();
+	private FuncionarioEntity mockFuncionario() {
+		FuncionarioEntity funcionario = new FuncionarioEntity();
 		funcionario.setId(1);
 		return funcionario;
 	}

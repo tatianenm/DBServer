@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RestauranteConverter {
 
-    public RestauranteEntity converteParaRestaurante(RestauranteDTO restauranteDTO) {
+    public RestauranteEntity converteParaRestauranteEntity(RestauranteDTO restauranteDTO) {
         return RestauranteEntity.builder().build().builder()
                 .id(restauranteDTO.getId())
                 .nome(restauranteDTO.getNome())

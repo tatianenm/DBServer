@@ -5,10 +5,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.funcionario.model.FuncionarioEntity;
 
-public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
+public interface FuncionarioRepository extends JpaRepository<FuncionarioEntity, Integer> {
 	
-	Optional<List<Funcionario>> findByNomeContainingIgnoreCase(String nome);
+	Optional<List<FuncionarioEntity>> findByNomeContainingIgnoreCase(String nome);
    
 }

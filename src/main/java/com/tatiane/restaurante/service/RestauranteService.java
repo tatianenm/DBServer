@@ -40,7 +40,7 @@ public class RestauranteService {
     }
 
     public RestauranteEntity cadastroRestaurante(RestauranteDTO restauranteDTO) {
-        return restauranteRepository.save(restauranteConverter.converteParaRestaurante(restauranteDTO));
+        return restauranteRepository.save(restauranteConverter.converteParaRestauranteEntity(restauranteDTO));
     }
 
 }

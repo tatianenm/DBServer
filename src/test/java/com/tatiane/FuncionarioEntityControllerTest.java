@@ -18,13 +18,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.funcionario.service.FuncionarioService;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FuncionarioControllerTest {
+public class FuncionarioEntityControllerTest {
  
 	
 	private MockMvc mockMvc;
@@ -44,7 +44,7 @@ public class FuncionarioControllerTest {
 
     @Test
     public void getFuncionariosTest() throws Exception {
-    	Funcionario mockFunc = new Funcionario(2, "jose", "123", "jose");
+    	FuncionarioEntity mockFunc = new FuncionarioEntity(2, "jose", "123", "jose");
     	Mockito.when(funcionarioService.findAll()).thenReturn(Lists.newArrayList(mockFunc));
     	
     	RequestBuilder requestBuilder = MockMvcRequestBuilders

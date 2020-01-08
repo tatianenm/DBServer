@@ -1,6 +1,6 @@
 package com.tatiane.voto.model;
 
-import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,13 +34,13 @@ public class Voto implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "idfuncionario")
-    private Funcionario funcionario;
+    private FuncionarioEntity funcionario;
 
     @Column(name = "escolhido")
     private Boolean escolhido;
 
 
-    public Voto(Integer id, Date data, RestauranteEntity restaurante, Funcionario funcionario, Boolean escolhido) {
+    public Voto(Integer id, Date data, RestauranteEntity restaurante, FuncionarioEntity funcionario, Boolean escolhido) {
         super();
         this.id = id;
         this.data = data;

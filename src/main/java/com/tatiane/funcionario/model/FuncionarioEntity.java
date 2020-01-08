@@ -1,5 +1,7 @@
 package com.tatiane.funcionario.model;
 
+import lombok.Builder;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -18,9 +20,10 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name="funcionario")
 @Entity
-public class Funcionario implements Serializable {
+public class FuncionarioEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -54,7 +57,7 @@ public class Funcionario implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcionario other = (Funcionario) obj;
+		FuncionarioEntity other = (FuncionarioEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

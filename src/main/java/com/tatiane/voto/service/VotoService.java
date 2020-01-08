@@ -1,6 +1,6 @@
 package com.tatiane.voto.service;
 
-import com.tatiane.funcionario.model.Funcionario;
+import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.util.DateUtil;
 import com.tatiane.voto.dto.VotoDto;
@@ -42,7 +42,7 @@ public class VotoService {
 
     public Voto votar(Integer idRestaurante, Integer idFuncionario) {
 
-        Funcionario funcionario = new Funcionario();
+        FuncionarioEntity funcionario = new FuncionarioEntity();
         funcionario.setId(idFuncionario);
         RestauranteEntity restaurante = new RestauranteEntity();
         restaurante.setId(idRestaurante);
@@ -59,7 +59,7 @@ public class VotoService {
 
     }
 
-    private boolean verificaSeFuncionarioJaVotouRestauranteMesmoDia(Funcionario funcionario, Date data, RestauranteEntity restaurante) {
+    private boolean verificaSeFuncionarioJaVotouRestauranteMesmoDia(FuncionarioEntity funcionario, Date data, RestauranteEntity restaurante) {
         return Optional.ofNullable(votoRepository.findByFuncionarioAndDataAndRestaurante(funcionario, data, restaurante)).isPresent();
     }
 
