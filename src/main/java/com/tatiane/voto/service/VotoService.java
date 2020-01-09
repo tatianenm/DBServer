@@ -52,7 +52,7 @@ public class VotoService {
     }
 
     public VotoEntity votar(VotarDto votarDto) {
-        if(Objects.nonNull(votarDto.getFuncionarioDTO().getId())  && Objects.nonNull(votarDto.getRestauranteDTO().getId())) {
+        if (Objects.nonNull(votarDto.getFuncionarioDTO().getId()) && Objects.nonNull(votarDto.getRestauranteDTO().getId())) {
             if (verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(votarDto.getFuncionarioDTO(), LocalDate.now(),
                     votarDto.getRestauranteDTO())) {
                 throw new VotoBusinessException(MSG_VOTO_REPETIDO);
@@ -62,10 +62,10 @@ public class VotoService {
     }
 
     private boolean verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(FuncionarioDTO funcionarioDTO, LocalDate data,
-                                                                    RestauranteDTO restauranteDTO) {
+                                                                      RestauranteDTO restauranteDTO) {
         return Optional.ofNullable(votoRepository.
                 findByFuncionarioAndDataAndRestaurante(funcionarioConverter.
-                        converteParaFuncionarioEntity(funcionarioDTO), data,
+                                converteParaFuncionarioEntity(funcionarioDTO), data,
                         restauranteConverter.converteParaRestauranteEntity(restauranteDTO))).isPresent();
     }
 
@@ -108,7 +108,7 @@ public class VotoService {
         return votoRepository.
                 findByRestauranteAndDataBetweenAndDataNot(restauranteConverter.converteParaRestauranteEntity(
                         dto.getRestauranteDTO()), dto.getData().with(DayOfWeek.MONDAY),
-                dto.getData().with(DayOfWeek.FRIDAY), LocalDate.now());
+                        dto.getData().with(DayOfWeek.FRIDAY), LocalDate.now());
     }
 
 }
