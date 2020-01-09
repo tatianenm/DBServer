@@ -46,13 +46,12 @@ INSERT INTO funcionario(id, nome, user, senha) VALUES (10, 'Jose Gomes', 'gomes'
 --  data Date,
 --  idrestaurante Integer,
 --  idfuncionario Integer,
---  escolhido char(0),
 --  last_modification TIMESTAMP
 --);
 
 
-INSERT INTO voto(id, data, idrestaurante, idfuncionario, escolhido) VALUES (1, '2019-10-14',  2, 3, 1);
-INSERT INTO voto(id, data, idrestaurante, idfuncionario, escolhido) VALUES (2, '2019-10-14',  3, 4, 0);
-INSERT INTO voto(id, data, idrestaurante, idfuncionario, escolhido) VALUES (3, '2019-10-14',  2, 2, 1);
+INSERT INTO voto(id, data, idrestaurante, idfuncionario) VALUES (1, '2020-01-08',  2, 3);
+INSERT INTO voto(id, data, idrestaurante, idfuncionario) VALUES (2, '2019-10-14',  3, 4);
+INSERT INTO voto(id, data, idrestaurante, idfuncionario) VALUES (3, '2020-01-08',  2, 2);
 
 

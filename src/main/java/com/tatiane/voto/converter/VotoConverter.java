@@ -31,11 +31,13 @@ public class VotoConverter {
     }
 
     public VotoEntity converteParaVotoEntity(VotarDto votarDto) {
-        VotoEntity votoEntity = new VotoEntity();
-        votoEntity.setData(votarDto.getData());
-        votoEntity.setRestaurante(restauranteConverter.converteParaRestauranteEntity(votarDto.getRestauranteDTO()));
-        votoEntity.setFuncionario(funcionarioConverter.converteParaFuncionarioEntity(votarDto.getFuncionarioDTO()));
-        return votoEntity;
+        return  VotoEntity.builder()
+                .id(votarDto.getId())
+                .data(votarDto.getData())
+                .restaurante(restauranteConverter.converteParaRestauranteEntity(votarDto.getRestauranteDTO()))
+                .funcionario(funcionarioConverter.converteParaFuncionarioEntity(votarDto.getFuncionarioDTO()))
+                .build();
+
     }
 
     public VotarDto converteParaVotarDto(VotoEntity votoEntity){

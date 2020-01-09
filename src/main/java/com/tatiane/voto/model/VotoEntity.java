@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.AllArgsConstructor;
 
 
 import javax.persistence.Table;
@@ -23,6 +24,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "voto")
@@ -46,18 +48,16 @@ public class VotoEntity implements Serializable {
     @JoinColumn(name = "idfuncionario")
     private FuncionarioEntity funcionario;
 
-    @Column(name = "escolhido")
-    private Boolean escolhido;
+//    @Column(name = "escolhido")
+//    private Boolean escolhido;
 
-
-    public VotoEntity(Integer id, LocalDate data, RestauranteEntity restaurante, FuncionarioEntity funcionario, Boolean escolhido) {
-        super();
-        this.id = id;
-        this.data = data;
-        this.restaurante = restaurante;
-        this.funcionario = funcionario;
-        this.escolhido = Boolean.FALSE;
-    }
+//    public VotoEntity(Integer id, LocalDate data, RestauranteEntity restaurante, FuncionarioEntity funcionario, Boolean escolhido) {
+//        this.id = id;
+//        this.data = data;
+//        this.restaurante = restaurante;
+//        this.funcionario = funcionario;
+//        this.escolhido = escolhido;
+//    }
 
     @Override
     public int hashCode() {

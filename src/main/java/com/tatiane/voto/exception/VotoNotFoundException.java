@@ -8,7 +8,7 @@ public class VotoNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String MSG_FUNCIONARIO_NAO_ENCONTRADO = "Funcionário não foi encontrado.";
+	public static final String MSG_FUNCIONARIO_NAO_ENCONTRADO = "Voto não foi encontrado.";
 
 	public VotoNotFoundException() {
 		super(MSG_FUNCIONARIO_NAO_ENCONTRADO);

@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class VotoEntityControllerTest {
+public class VotoControllerTest {
 
 	private MockMvc mockMvc;
 
@@ -73,7 +73,7 @@ public class VotoEntityControllerTest {
 	}
 	
 //	private VotoEntity mockVoto() {
-//		return new VotoEntity(1, formataData(), mockRestaurante(), mockFuncionario(), Boolean.FALSE);
+//		return new VotoEntity(1, formataData(), mockRestaurante(), mockFuncionario());
 //	}
 
 	private Date formataData() {

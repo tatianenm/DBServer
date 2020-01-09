@@ -1,11 +1,13 @@
 package com.tatiane.voto.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
 public class VotoBusinessException extends RuntimeException {
 
-    public static final String MSG_VOTO_REPETIDO = "O funcionário já votou na data de hoje no mesmo restaurante";
-
-    public VotoBusinessException(){
-        super(MSG_VOTO_REPETIDO);
+    public VotoBusinessException(String message){
+        super(message);
     }
 
 }

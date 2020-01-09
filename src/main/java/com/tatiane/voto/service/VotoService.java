@@ -2,14 +2,12 @@ package com.tatiane.voto.service;
 
 import com.tatiane.funcionario.converter.FuncionarioConverter;
 import com.tatiane.funcionario.dto.FuncionarioDTO;
-import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.converter.RestauranteConverter;
 import com.tatiane.restaurante.dto.RestauranteDTO;
 import com.tatiane.restaurante.model.RestauranteEntity;
-import com.tatiane.util.DateUtil;
 import com.tatiane.voto.converter.VotoConverter;
 import com.tatiane.voto.dto.VotarDto;
-import com.tatiane.voto.dto.VotoDto;
+import com.tatiane.voto.dto.VotacaoDto;
 import com.tatiane.voto.exception.VotoBusinessException;
 import com.tatiane.voto.exception.VotoNotFoundException;
 import com.tatiane.voto.model.VotoEntity;
@@ -53,28 +51,14 @@ public class VotoService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<VotoEntity> findById(Integer id) {
-        return votoRepository.findById(id);
-    }
-
     public VotoEntity votar(VotarDto votarDto) {
-
-//        FuncionarioEntity funcionario = new FuncionarioEntity();
-//        funcionario.setId(idFuncionario);
-//        RestauranteEntity restaurante = new RestauranteEntity();
-//        restaurante.setId(idRestaurante);
-
-        if (verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(votarDto.getFuncionarioDTO(), LocalDate.now(),
-                votarDto.getRestauranteDTO())) {
-            throw new VotoBusinessException();
+        if(Objects.nonNull(votarDto.getFuncionarioDTO().getId())  && Objects.nonNull(votarDto.getRestauranteDTO().getId())) {
+            if (verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(votarDto.getFuncionarioDTO(), LocalDate.now(),
+                    votarDto.getRestauranteDTO())) {
+                throw new VotoBusinessException(MSG_VOTO_REPETIDO);
+            }
         }
-//        VotoEntity votoEntity = new VotoEntity();
-//        votoEntity.setData(LocalDate.now());
-//        votoEntity.setFuncionario(funcionario);
-//        votoEntity.setRestaurante(restaurante);
-//        votoEntity.setEscolhido(false);
         return votoRepository.save(votoConverter.converteParaVotoEntity(votarDto));
-
     }
 
     private boolean verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(FuncionarioDTO funcionarioDTO, LocalDate data,
@@ -85,50 +69,46 @@ public class VotoService {
                         restauranteConverter.converteParaRestauranteEntity(restauranteDTO))).isPresent();
     }
 
-//    public VotoDto retornaResultadoVotacao(Date data) {
-//        List<VotoEntity> votacoes = votoRepository.findByData(data);
-//        List<VotoDto> dtos = new ArrayList<>();
-//
-//        if (votacoes != null) {
-//            votacoes.forEach(voto -> {
-//                RestauranteEntity r = voto.getRestaurante();
-//                VotoDto dto = new VotoDto();
-//                dto.setRestaurante(r);
-//                dto.setQuantidadeVotos(1);
-//                dto.setData(data);
-//                if (dtos.contains(dto)) {
-//                    int i = dtos.indexOf(dto);
-//                    dtos.get(i).setQuantidadeVotos(dtos.get(i).getQuantidadeVotos() + 1);
-//                } else {
-//                    dtos.add(dto);
-//                }
-//            });
-//        }
-//        VotoDto voto = dtos.stream()
-//                .max(Comparator.comparing(VotoDto::getQuantidadeVotos))
-//                .get();
-//
-//        if (verificaSeRestauranteJaFoiEscolhidoNaSemana(voto).size() > 0) {
-//            throw new VotoNotFoundException(MSG_RESTAURANTE_REPETIDO + "Id: " + voto.getRestaurante().getId() + " " + voto.getRestaurante().getNome());
-//        }
-//
-//        return voto;
-//    }
+    public VotacaoDto retornaResultadoVotacao(LocalDate data) {
+        List<VotoEntity> votosEntity = votoRepository.findByData(data);
+        List<VotacaoDto> dtos = new ArrayList<>();
+
+        if (votosEntity != null) {
+            votosEntity.forEach(voto -> {
+                RestauranteEntity restauranteEntity = voto.getRestaurante();
+                VotacaoDto votacao = new VotacaoDto();
+                votacao.setRestauranteDTO(restauranteConverter.converteParaRestauranteDTO(restauranteEntity));
+                votacao.setQuantidadeVotos(1);
+                votacao.setData(data);
+                if (dtos.contains(votacao)) {
+                    int i = dtos.indexOf(votacao);
+                    dtos.get(i).setQuantidadeVotos(dtos.get(i).getQuantidadeVotos() + 1);
+                } else {
+                    dtos.add(votacao);
+                }
+            });
+        }
+        VotacaoDto votacaoDto = dtos.stream()
+                .max(Comparator.comparing(VotacaoDto::getQuantidadeVotos))
+                .get();
+
+        if (verificaSeRestauranteJaFoiEscolhidoNaSemana(votacaoDto).size() > 0) {
+            throw new VotoBusinessException(MSG_RESTAURANTE_REPETIDO + "Id: "
+                    + votacaoDto.getRestauranteDTO().getId() + " " + votacaoDto.getRestauranteDTO().getNome());
+        }
+        return votacaoDto;
+    }
 
     public void excluir(Integer id) {
+        votoRepository.findById(id).orElseThrow(VotoNotFoundException::new);
         votoRepository.deleteById(id);
     }
 
-
-//    private List<VotoEntity> verificaSeRestauranteJaFoiEscolhidoNaSemana(VotoDto dto) {
-//        return votoRepository.verificaSeRestauranteJaFoiEscolhidoNaSemana(dto.getRestaurante().getId(),
-//                converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.MONDAY)),
-//                converteParaDate(DateUtil.converteParaLocalDate(dto.getData()).with(DayOfWeek.FRIDAY)));
-//
-//    }
-
-    private Date converteParaDate(LocalDate localDate) {
-        return DateUtil.converteParaDate(localDate);
+    private List<VotoEntity> verificaSeRestauranteJaFoiEscolhidoNaSemana(VotacaoDto dto) {
+        return votoRepository.
+                findByRestauranteAndDataBetweenAndDataNot(restauranteConverter.converteParaRestauranteEntity(
+                        dto.getRestauranteDTO()), dto.getData().with(DayOfWeek.MONDAY),
+                dto.getData().with(DayOfWeek.FRIDAY), LocalDate.now());
     }
 
 }
