@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -121,7 +122,7 @@ public class VotoServiceTest {
 
     @Test
     public void deveExcluirVoto(){
-      //  Mockito.when(votoRepository.findById(ID)).thenReturn();
+        Mockito.when(votoRepository.findById(ID)).thenReturn(Optional.of(mockVotoEntity()));
         votoService.excluir(ID);
         Mockito.verify(votoRepository, Mockito.times(1)).deleteById(ID);
     }
