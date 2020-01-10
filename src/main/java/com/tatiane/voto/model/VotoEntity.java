@@ -48,16 +48,6 @@ public class VotoEntity implements Serializable {
     @JoinColumn(name = "idfuncionario")
     private FuncionarioEntity funcionario;
 
-//    @Column(name = "escolhido")
-//    private Boolean escolhido;
-
-//    public VotoEntity(Integer id, LocalDate data, RestauranteEntity restaurante, FuncionarioEntity funcionario, Boolean escolhido) {
-//        this.id = id;
-//        this.data = data;
-//        this.restaurante = restaurante;
-//        this.funcionario = funcionario;
-//        this.escolhido = escolhido;
-//    }
 
     @Override
     public int hashCode() {

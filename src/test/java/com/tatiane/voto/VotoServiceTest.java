@@ -38,8 +38,7 @@ public class VotoServiceTest {
     private VotoService votoService;
     @Mock
     private VotoRepository votoRepository;
-    @Mock
-    private MocksVoto mocksVoto;
+
     @Mock
     private VotoValidator votoValidator;
     @Mock
