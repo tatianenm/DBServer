@@ -90,13 +90,13 @@ public class VotoServiceTest {
         return votoEntity;
     }
 
-    public RestauranteEntity mockRestauranteEntity() {
+    private RestauranteEntity mockRestauranteEntity() {
         RestauranteEntity restauranteEntity = new RestauranteEntity();
         restauranteEntity.setId(ID_RESTAURANTE);
         return restauranteEntity;
     }
 
-    public FuncionarioEntity mockFuncionarioEntity() {
+    private FuncionarioEntity mockFuncionarioEntity() {
         FuncionarioEntity funcionarioEntity = new FuncionarioEntity();
         funcionarioEntity.setId(ID_FUNCIONARIO);
         return funcionarioEntity;
