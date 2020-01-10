@@ -5,6 +5,7 @@ import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.dto.RestauranteDTO;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.voto.converter.VotoConverter;
+import com.tatiane.voto.dto.VotacaoDto;
 import com.tatiane.voto.dto.VotarDto;
 import com.tatiane.voto.model.VotoEntity;
 import com.tatiane.voto.repository.VotoRepository;
@@ -102,5 +103,15 @@ public class VotoServiceTest {
         Mockito.when(votoRepository.findById(ID)).thenReturn(Optional.of(mockVotoEntity()));
         votoService.excluir(ID);
         Mockito.verify(votoRepository, Mockito.times(1)).deleteById(ID);
+    }
+
+    @Test
+    public void deveRetornarResultadoVotacao(){
+        Mockito.when(votoRepository.
+                findByRestauranteAndDataBetweenAndDataNot(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+                .thenReturn(Arrays.asList(mockVotoEntity()));
+        VotacaoDto votacaoDto = votoService.retornaResultadoVotacao(DATA);
+
+        Assert.assertNotNull(votacaoDto.getQuantidadeVotos());
     }
 }
