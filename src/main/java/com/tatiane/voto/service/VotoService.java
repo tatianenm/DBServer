@@ -12,6 +12,7 @@ import com.tatiane.voto.exception.VotoBusinessException;
 import com.tatiane.voto.exception.VotoNotFoundException;
 import com.tatiane.voto.model.VotoEntity;
 import com.tatiane.voto.repository.VotoRepository;
+import com.tatiane.voto.validator.VotoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,13 +36,17 @@ public class VotoService {
 
     private RestauranteConverter restauranteConverter;
 
+    private VotoValidator votoValidator;
+
     @Autowired
     public VotoService(VotoRepository votoRepository, VotoConverter votoConverter,
-                       FuncionarioConverter funcionarioConverter, RestauranteConverter restauranteConverter) {
+                       FuncionarioConverter funcionarioConverter, RestauranteConverter restauranteConverter,
+                       VotoValidator votoValidator) {
         this.votoRepository = votoRepository;
         this.votoConverter = votoConverter;
         this.funcionarioConverter = funcionarioConverter;
         this.restauranteConverter = restauranteConverter;
+        this.votoValidator = votoValidator;
     }
 
     public List<VotoEntity> findAll() {
@@ -52,21 +57,8 @@ public class VotoService {
     }
 
     public VotoEntity votar(VotarDto votarDto) {
-        if (Objects.nonNull(votarDto.getFuncionarioDTO().getId()) && Objects.nonNull(votarDto.getRestauranteDTO().getId())) {
-            if (verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(votarDto.getFuncionarioDTO(), LocalDate.now(),
-                    votarDto.getRestauranteDTO())) {
-                throw new VotoBusinessException(MSG_VOTO_REPETIDO);
-            }
-        }
+        votoValidator.validate(votarDto);
         return votoRepository.save(votoConverter.converteParaVotoEntity(votarDto));
-    }
-
-    private boolean verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(FuncionarioDTO funcionarioDTO, LocalDate data,
-                                                                      RestauranteDTO restauranteDTO) {
-        return Optional.ofNullable(votoRepository.
-                findByFuncionarioAndDataAndRestaurante(funcionarioConverter.
-                                converteParaFuncionarioEntity(funcionarioDTO), data,
-                        restauranteConverter.converteParaRestauranteEntity(restauranteDTO))).isPresent();
     }
 
     public VotacaoDto retornaResultadoVotacao(LocalDate data) {

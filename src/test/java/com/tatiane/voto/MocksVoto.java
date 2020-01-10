@@ -12,63 +12,63 @@ import java.time.LocalDate;
 
 public class MocksVoto {
 
-    private static final Integer ID = 2;
-
-    private static final Integer ID_RESTAURANTE = 2;
-
-    private static final Integer ID_FUNCIONARIO = 2;
-
-    private static final LocalDate DATA = LocalDate.now();
-
-
-    public VotoEntity mockVotoEntity(){
-        VotoEntity votoEntity = new VotoEntity();
-        votoEntity.setId(ID);
-        votoEntity.setData(DATA);
-        votoEntity.setFuncionario(mockFuncionarioEntity());
-        votoEntity.setRestaurante(mockRestauranteEntity());
-        return votoEntity;
-    }
-
-    public RestauranteEntity mockRestauranteEntity(){
-        RestauranteEntity restauranteEntity = new RestauranteEntity();
-        restauranteEntity.setId(ID_RESTAURANTE);
-        return restauranteEntity;
-    }
-
-    public FuncionarioEntity mockFuncionarioEntity(){
-        FuncionarioEntity funcionarioEntity = new FuncionarioEntity();
-        funcionarioEntity.setId(ID_FUNCIONARIO);
-        return funcionarioEntity;
-    }
-
-//    public VotoPesquisaDTO mockVotoPesquisaDTO(){
-//        VotoPesquisaDTO votoPesquisa = new VotoPesquisaDTO();
-//        votoPesquisa.setId(mockVotoEntity().getId());
-//        votoPesquisa.setData(mockVotoEntity().getData());
-//        votoPesquisa.setFuncionarioDTO(mockConverteParaFuncionarioDTO(mockVotoEntity().getFuncionario()));
-//        votoPesquisa.setRestauranteDTO(mockConverteParaRestauranteDTO(mockVotoEntity().getRestaurante()));
+//    private static final Integer ID = 2;
 //
-//        return votoPesquisa;
+//    private static final Integer ID_RESTAURANTE = 2;
+//
+//    private static final Integer ID_FUNCIONARIO = 2;
+//
+//    private static final LocalDate DATA = LocalDate.now();
+//
+//
+//    public VotoEntity mockVotoEntity(){
+//        VotoEntity votoEntity = new VotoEntity();
+//        votoEntity.setId(ID);
+//        votoEntity.setData(DATA);
+//        votoEntity.setFuncionario(mockFuncionarioEntity());
+//        votoEntity.setRestaurante(mockRestauranteEntity());
+//        return votoEntity;
 //    }
-
-    public RestauranteDTO mockConverteParaRestauranteDTO(RestauranteEntity restaurante){
-        return RestauranteDTO.builder()
-                .id(restaurante.getId())
-                .build();
-    }
-
-    public FuncionarioDTO mockConverteParaFuncionarioDTO(FuncionarioEntity funcionario){
-        return FuncionarioDTO.builder()
-                .id(funcionario.getId())
-                .build();
-    }
-    public VotarDto mockVotarDTO(){
-        VotarDto votar = new VotarDto();
-        votar.setId(ID);
-        votar.setData(DATA);
-        votar.setFuncionarioDTO(mockConverteParaFuncionarioDTO(mockFuncionarioEntity()));
-        votar.setRestauranteDTO(mockConverteParaRestauranteDTO(mockRestauranteEntity()));
-        return votar;
-    }
+//
+//    public RestauranteEntity mockRestauranteEntity(){
+//        RestauranteEntity restauranteEntity = new RestauranteEntity();
+//        restauranteEntity.setId(ID_RESTAURANTE);
+//        return restauranteEntity;
+//    }
+//
+//    public FuncionarioEntity mockFuncionarioEntity(){
+//        FuncionarioEntity funcionarioEntity = new FuncionarioEntity();
+//        funcionarioEntity.setId(ID_FUNCIONARIO);
+//        return funcionarioEntity;
+//    }
+//
+////    public VotoPesquisaDTO mockVotoPesquisaDTO(){
+////        VotoPesquisaDTO votoPesquisa = new VotoPesquisaDTO();
+////        votoPesquisa.setId(mockVotoEntity().getId());
+////        votoPesquisa.setData(mockVotoEntity().getData());
+////        votoPesquisa.setFuncionarioDTO(mockConverteParaFuncionarioDTO(mockVotoEntity().getFuncionario()));
+////        votoPesquisa.setRestauranteDTO(mockConverteParaRestauranteDTO(mockVotoEntity().getRestaurante()));
+////
+////        return votoPesquisa;
+////    }
+//
+//    public RestauranteDTO mockConverteParaRestauranteDTO(RestauranteEntity restaurante){
+//        return RestauranteDTO.builder()
+//                .id(restaurante.getId())
+//                .build();
+//    }
+//
+//    public FuncionarioDTO mockConverteParaFuncionarioDTO(FuncionarioEntity funcionario){
+//        return FuncionarioDTO.builder()
+//                .id(funcionario.getId())
+//                .build();
+//    }
+//    public VotarDto mockVotarDTO(){
+//        VotarDto votar = new VotarDto();
+//        votar.setId(ID);
+//        votar.setData(DATA);
+//        votar.setFuncionarioDTO(mockConverteParaFuncionarioDTO(mockFuncionarioEntity()));
+//        votar.setRestauranteDTO(mockConverteParaRestauranteDTO(mockRestauranteEntity()));
+//        return votar;
+//    }
 }
