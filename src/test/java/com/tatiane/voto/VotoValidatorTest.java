@@ -25,7 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class VotoValidatorTest {
 
     @InjectMocks
-    private VotoValidator restauranteValidator;
+    private VotoValidator votoValidator;
     @Mock
     private FuncionarioConverter funcionarioConverter;
     @Mock
@@ -38,10 +38,10 @@ public class VotoValidatorTest {
 
     @Test
     public void testValidateDeveRetornarErro() {
-        exception.expectMessage(VotoService.MSG_VOTO_REPETIDO);
+        exception.expectMessage(VotoValidator.MSG_VOTO_REPETIDO);
         Mockito.when(votoRepository.findByFuncionarioAndDataAndRestaurante(Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(new VotoEntity());
-        this.restauranteValidator.validate(mockVotarDTO());
+        votoValidator.validaSeFuncionarioJaVotouRestauranteNoMesmoDia(mockVotarDTO());
         Mockito.verify(votoRepository).findByFuncionarioAndDataAndRestaurante(Mockito.any(), Mockito.any(), Mockito.any());
     }
 

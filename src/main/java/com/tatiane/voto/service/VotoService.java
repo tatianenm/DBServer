@@ -1,14 +1,11 @@
 package com.tatiane.voto.service;
 
 import com.tatiane.funcionario.converter.FuncionarioConverter;
-import com.tatiane.funcionario.dto.FuncionarioDTO;
 import com.tatiane.restaurante.converter.RestauranteConverter;
-import com.tatiane.restaurante.dto.RestauranteDTO;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.voto.converter.VotoConverter;
-import com.tatiane.voto.dto.VotarDto;
 import com.tatiane.voto.dto.VotacaoDto;
-import com.tatiane.voto.exception.VotoBusinessException;
+import com.tatiane.voto.dto.VotarDto;
 import com.tatiane.voto.exception.VotoNotFoundException;
 import com.tatiane.voto.model.VotoEntity;
 import com.tatiane.voto.repository.VotoRepository;
@@ -16,17 +13,14 @@ import com.tatiane.voto.validator.VotoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class VotoService {
-
-    public static final String MSG_RESTAURANTE_REPETIDO = "O restaurante escolhido já foi selecionado esta semana.";
-
-    public static final String MSG_VOTO_REPETIDO = "O funcionário já votou na data de hoje no mesmo restaurante";
 
     private VotoRepository votoRepository;
 
@@ -57,7 +51,7 @@ public class VotoService {
     }
 
     public VotoEntity votar(VotarDto votarDto) {
-        votoValidator.validate(votarDto);
+        votoValidator.validaSeFuncionarioJaVotouRestauranteNoMesmoDia(votarDto);
         return votoRepository.save(votoConverter.converteParaVotoEntity(votarDto));
     }
 
@@ -83,11 +77,8 @@ public class VotoService {
         VotacaoDto votacaoDto = dtos.stream()
                 .max(Comparator.comparing(VotacaoDto::getQuantidadeVotos))
                 .get();
+        votoValidator.validaSeRestauranteJaFoiEscolhidoNaSemana(votacaoDto);
 
-        if (verificaSeRestauranteJaFoiEscolhidoNaSemana(votacaoDto).size() > 0) {
-            throw new VotoBusinessException(MSG_RESTAURANTE_REPETIDO + "Id: "
-                    + votacaoDto.getRestauranteDTO().getId() + " " + votacaoDto.getRestauranteDTO().getNome());
-        }
         return votacaoDto;
     }
 
@@ -95,12 +86,4 @@ public class VotoService {
         votoRepository.findById(id).orElseThrow(VotoNotFoundException::new);
         votoRepository.deleteById(id);
     }
-
-    private List<VotoEntity> verificaSeRestauranteJaFoiEscolhidoNaSemana(VotacaoDto dto) {
-        return votoRepository.
-                findByRestauranteAndDataBetweenAndDataNot(restauranteConverter.converteParaRestauranteEntity(
-                        dto.getRestauranteDTO()), dto.getData().with(DayOfWeek.MONDAY),
-                        dto.getData().with(DayOfWeek.FRIDAY), LocalDate.now());
-    }
-
 }
