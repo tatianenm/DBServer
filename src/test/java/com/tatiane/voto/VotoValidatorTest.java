@@ -2,15 +2,14 @@ package com.tatiane.voto;
 
 import com.tatiane.funcionario.converter.FuncionarioConverter;
 import com.tatiane.funcionario.dto.FuncionarioDTO;
+import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.converter.RestauranteConverter;
 import com.tatiane.restaurante.dto.RestauranteDTO;
+import com.tatiane.restaurante.model.RestauranteEntity;
+import com.tatiane.voto.dto.VotacaoDto;
 import com.tatiane.voto.dto.VotarDto;
 import com.tatiane.voto.model.VotoEntity;
 import com.tatiane.voto.repository.VotoRepository;
-import com.tatiane.voto.service.VotoService;
-
-import java.time.LocalDate;
-
 import com.tatiane.voto.validator.VotoValidator;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,6 +19,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.time.LocalDate;
+import java.util.Arrays;
 
 @RunWith(SpringRunner.class)
 public class VotoValidatorTest {
@@ -37,7 +39,7 @@ public class VotoValidatorTest {
 
 
     @Test
-    public void testValidateDeveRetornarErro() {
+    public void deveRetornarErroVotoRepetido() {
         exception.expectMessage(VotoValidator.MSG_VOTO_REPETIDO);
         Mockito.when(votoRepository.findByFuncionarioAndDataAndRestaurante(Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(new VotoEntity());
@@ -46,12 +48,40 @@ public class VotoValidatorTest {
     }
 
     private VotarDto mockVotarDTO() {
-        VotarDto votar = new VotarDto();
-        votar.setId(1);
-        votar.setData(LocalDate.now());
-        votar.setRestauranteDTO(RestauranteDTO.builder().id(1).build());
-        votar.setFuncionarioDTO(FuncionarioDTO.builder().id(1).build());
-        return votar;
+        return VotarDto.builder()
+                .id(1)
+                .data(LocalDate.now())
+                .restauranteDTO(RestauranteDTO.builder().id(1).build())
+                .funcionarioDTO(FuncionarioDTO.builder().id(1).build())
+                .build();
+    }
+
+    @Test
+    public void deveRetornarErroRestauranteRepetidoNaSemana() {
+        exception.expectMessage(VotoValidator.MSG_RESTAURANTE_REPETIDO);
+        Mockito.when(votoRepository.
+                findByRestauranteAndDataBetweenAndDataNot(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+                .thenReturn(Arrays.asList(mockVotoEntity()));
+        votoValidator.validaSeRestauranteJaFoiEscolhidoNaSemana(mockVotacaoDTO());
+        Mockito.verify(votoRepository)
+                .findByRestauranteAndDataBetweenAndDataNot(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any());
+    }
+
+    private VotoEntity mockVotoEntity() {
+        return VotoEntity.builder()
+                .id(1)
+                .funcionario(FuncionarioEntity.builder().id(1).build())
+                .restaurante(RestauranteEntity.builder().id(1).build())
+                .data(LocalDate.now())
+                .build();
+    }
+
+    private VotacaoDto mockVotacaoDTO() {
+        return VotacaoDto.builder()
+                .data(LocalDate.of(2020, 01, 8))
+                .restauranteDTO(RestauranteDTO.builder().id(1).build())
+                .quantidadeVotos(3)
+                .build();
     }
 
 }
