@@ -7,6 +7,7 @@ import com.tatiane.restaurante.dto.RestauranteDTO;
 import com.tatiane.voto.dto.VotarDto;
 import com.tatiane.voto.exception.VotoBusinessException;
 import com.tatiane.voto.repository.VotoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class VotoValidator {
     private VotoRepository votoRepository;
     private RestauranteConverter restauranteConverter;
 
+    @Autowired
     public VotoValidator(FuncionarioConverter funcionarioConverter, VotoRepository votoRepository,
                          RestauranteConverter restauranteConverter) {
         this.funcionarioConverter = funcionarioConverter;
@@ -42,10 +44,12 @@ public class VotoValidator {
         }
     }
 
-    public boolean verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(FuncionarioDTO funcionarioDTO, LocalDate data,
+    private boolean verificaSeFuncionarioJaVotouRestauranteNoMesmoDia(FuncionarioDTO funcionarioDTO, LocalDate data,
                                                                      RestauranteDTO restauranteDTO) {
         return Optional.ofNullable(votoRepository.findByFuncionarioAndDataAndRestaurante(
                 funcionarioConverter.converteParaFuncionarioEntity(funcionarioDTO), data,
                 restauranteConverter.converteParaRestauranteEntity(restauranteDTO))).isPresent();
     }
+
+
 }
