@@ -56,12 +56,6 @@ public class VotoServiceTest {
 
     @Test
     public void deveSalvarVotoRestauranteTeste() {
-        VotoEntity votoEntity = new VotoEntity();
-        votoEntity.setId(ID);
-        votoEntity.setRestaurante(mockRestauranteEntity());
-        votoEntity.setFuncionario(mockFuncionarioEntity());
-        votoEntity.setData(DATA);
-
         Mockito.when(votoRepository.save(Mockito.any())).thenReturn(mockVotoEntity());
         VotoEntity voto = votoService.votar(mockVotarDTO());
 
@@ -73,33 +67,34 @@ public class VotoServiceTest {
     }
 
     private VotarDto mockVotarDTO() {
-        VotarDto votar = new VotarDto();
-        votar.setId(ID);
-        votar.setData(LocalDate.now());
-        votar.setRestauranteDTO(RestauranteDTO.builder().id(1).build());
-        votar.setFuncionarioDTO(FuncionarioDTO.builder().id(1).build());
-        return votar;
+        return VotarDto.builder()
+                .id(ID)
+                .data(LocalDate.now())
+                .restauranteDTO(RestauranteDTO.builder().id(1).build())
+                .funcionarioDTO(FuncionarioDTO.builder().id(1).build())
+                .build();
     }
 
     private VotoEntity mockVotoEntity() {
-        VotoEntity votoEntity = new VotoEntity();
-        votoEntity.setId(ID);
-        votoEntity.setData(DATA);
-        votoEntity.setFuncionario(mockFuncionarioEntity());
-        votoEntity.setRestaurante(mockRestauranteEntity());
-        return votoEntity;
+        return VotoEntity.builder()
+                .id(ID)
+                .data(DATA)
+                .funcionario(mockFuncionarioEntity())
+                .restaurante(mockRestauranteEntity())
+                .build();
     }
 
     private RestauranteEntity mockRestauranteEntity() {
-        RestauranteEntity restauranteEntity = new RestauranteEntity();
-        restauranteEntity.setId(ID_RESTAURANTE);
-        return restauranteEntity;
+       return  RestauranteEntity.builder()
+               .id(ID_RESTAURANTE)
+               .build();
     }
 
     private FuncionarioEntity mockFuncionarioEntity() {
-        FuncionarioEntity funcionarioEntity = new FuncionarioEntity();
-        funcionarioEntity.setId(ID_FUNCIONARIO);
-        return funcionarioEntity;
+        return FuncionarioEntity.builder()
+                .id(ID_FUNCIONARIO)
+                .build();
+
     }
 
     @Test
