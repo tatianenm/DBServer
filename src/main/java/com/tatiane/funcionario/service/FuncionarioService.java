@@ -13,36 +13,36 @@ import java.util.stream.Collectors;
 
 @Service
 public class FuncionarioService {
-	
-	private FuncionarioRepository funcionarioRepository;
 
-	private FuncionarioConverter funcionarioConverter;
+    private FuncionarioRepository funcionarioRepository;
 
-	@Autowired
-	public FuncionarioService(FuncionarioRepository funcionarioRepository, FuncionarioConverter funcionarioConverter) {
-		this.funcionarioRepository = funcionarioRepository;
-		this.funcionarioConverter = funcionarioConverter;
-	}
-    
-	public List<FuncionarioEntity> findAll(){
-		return funcionarioRepository.findAll()
-				                    .stream()
-				                    .sorted((f1,f2)->f1.getNome().compareToIgnoreCase(f2.getNome()))
-				                    .collect(Collectors.toList());		
-	}	
-	
-	public void excluirFuncionario(Integer id) {
-		funcionarioRepository.findById(id).orElseThrow(FuncionarioNotFoundException::new);
-		funcionarioRepository.deleteById(id);
-	} 
-	
-	public List<FuncionarioEntity> pesquisarFuncionarioPeloNome(String nome) {
-		return funcionarioRepository.findByNomeContainingIgnoreCase(nome).orElseThrow(FuncionarioNotFoundException::new);	
-		
-	} 
-	
-	public FuncionarioEntity cadastroFuncionario(FuncionarioDTO funcionarioDTO) {
-		return funcionarioRepository.save(funcionarioConverter.converteParaFuncionarioEntity(funcionarioDTO));
-	}
-	
+    private FuncionarioConverter funcionarioConverter;
+
+    @Autowired
+    public FuncionarioService(FuncionarioRepository funcionarioRepository, FuncionarioConverter funcionarioConverter) {
+        this.funcionarioRepository = funcionarioRepository;
+        this.funcionarioConverter = funcionarioConverter;
+    }
+
+    public List<FuncionarioEntity> findAll() {
+        return funcionarioRepository.findAll()
+                .stream()
+                .sorted((f1, f2) -> f1.getNome().compareToIgnoreCase(f2.getNome()))
+                .collect(Collectors.toList());
+    }
+
+    public void excluirFuncionario(Integer id) {
+        funcionarioRepository.findById(id).orElseThrow(FuncionarioNotFoundException::new);
+        funcionarioRepository.deleteById(id);
+    }
+
+    public List<FuncionarioEntity> pesquisarFuncionarioPeloNome(String nome) {
+        return funcionarioRepository.findByNomeContainingIgnoreCase(nome).orElseThrow(FuncionarioNotFoundException::new);
+
+    }
+
+    public FuncionarioEntity cadastroFuncionario(FuncionarioDTO funcionarioDTO) {
+        return funcionarioRepository.save(funcionarioConverter.converteParaFuncionarioEntity(funcionarioDTO));
+    }
+
 }

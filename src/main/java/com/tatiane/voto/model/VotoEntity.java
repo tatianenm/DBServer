@@ -30,9 +30,9 @@ import java.time.LocalDate;
 @Table(name = "voto")
 public class VotoEntity implements Serializable {
 
-	private static final long serialVersionUID = -6522011289963747955L;
+    private static final long serialVersionUID = -6522011289963747955L;
 
-	@Id
+    @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
