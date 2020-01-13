@@ -2,6 +2,7 @@ package com.tatiane.voto;
 
 import com.tatiane.funcionario.dto.FuncionarioDTO;
 import com.tatiane.funcionario.model.FuncionarioEntity;
+import com.tatiane.restaurante.converter.RestauranteConverter;
 import com.tatiane.restaurante.dto.RestauranteDTO;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.voto.converter.VotoConverter;
@@ -37,13 +38,18 @@ public class VotoServiceTest {
 
     @InjectMocks
     private VotoService votoService;
+
     @Mock
     private VotoRepository votoRepository;
 
     @Mock
     private VotoValidator votoValidator;
+
     @Mock
     private VotoConverter votoConverter;
+
+    @Mock
+    private RestauranteConverter restauranteConverter;
 
     @Test
     public void deveListarTudoDoBanco() {
@@ -86,9 +92,9 @@ public class VotoServiceTest {
     }
 
     private RestauranteEntity mockRestauranteEntity() {
-       return  RestauranteEntity.builder()
-               .id(ID_RESTAURANTE)
-               .build();
+      return RestauranteEntity.builder()
+              .id(ID_RESTAURANTE)
+              .build();
     }
 
     private FuncionarioEntity mockFuncionarioEntity() {
@@ -106,7 +112,8 @@ public class VotoServiceTest {
     }
 
     @Test
-    public void deveRetornarResultadoVotacao(){
+    public void deveRetornarResultadoVotacao() {
+        Mockito.when(votoRepository.findByData(DATA)).thenReturn(Arrays.asList(mockVotoEntity()));
         Mockito.when(votoRepository.
                 findByRestauranteAndDataBetweenAndDataNot(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(Arrays.asList(mockVotoEntity()));
@@ -114,4 +121,6 @@ public class VotoServiceTest {
 
         Assert.assertNotNull(votacaoDto.getQuantidadeVotos());
     }
+
+
 }

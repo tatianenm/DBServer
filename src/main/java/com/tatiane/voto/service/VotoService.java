@@ -2,6 +2,7 @@ package com.tatiane.voto.service;
 
 import com.tatiane.funcionario.converter.FuncionarioConverter;
 import com.tatiane.restaurante.converter.RestauranteConverter;
+import com.tatiane.restaurante.dto.RestauranteDTO;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.voto.converter.VotoConverter;
 import com.tatiane.voto.dto.VotacaoDto;
@@ -61,9 +62,8 @@ public class VotoService {
 
         if (votosEntity != null) {
             votosEntity.forEach(voto -> {
-                RestauranteEntity restauranteEntity = voto.getRestaurante();
                 VotacaoDto votacao = new VotacaoDto();
-                votacao.setRestauranteDTO(restauranteConverter.converteParaRestauranteDTO(restauranteEntity));
+                votacao.setRestauranteDTO(restauranteConverter.converteParaRestauranteDTO(voto.getRestaurante()));
                 votacao.setQuantidadeVotos(1);
                 votacao.setData(data);
                 if (dtos.contains(votacao)) {
