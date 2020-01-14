@@ -79,5 +79,19 @@ public class RestauranteServiceTest {
         return restauranteDTO;
     }
 
+    @Test
+    public void deveCadastrarRestaurante(){
+        Mockito.when(restauranteRepository.save(mockRestauranteEntity())).thenReturn(mockRestauranteEntity());
+        Mockito.when(restauranteConverter.converteParaRestauranteEntity(mockRestauranteDTO())).
+                thenReturn(mockRestauranteEntity());
+        RestauranteEntity restauranteEntity = restauranteService.cadastroRestaurante(mockRestauranteDTO());
+
+        Assert.assertNotNull(restauranteEntity.getId());
+        Assert.assertEquals(ID, restauranteEntity.getId());
+        Assert.assertEquals(NOME, restauranteEntity.getNome());
+        Assert.assertEquals(ENDERECO, restauranteEntity.getEndereco());
+        Mockito.verify(restauranteRepository, Mockito.times(1)).save(mockRestauranteEntity());
+
+    }
 
 }

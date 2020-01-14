@@ -1,8 +1,11 @@
 package com.tatiane.funcionario;
 
+import com.tatiane.funcionario.converter.FuncionarioConverter;
+import com.tatiane.funcionario.dto.FuncionarioDTO;
 import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.funcionario.repository.FuncionarioRepository;
 import com.tatiane.funcionario.service.FuncionarioService;
+import com.tatiane.restaurante.model.RestauranteEntity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +32,9 @@ public class FuncionarioServiceTest {
 
     @Mock
     private FuncionarioRepository funcionarioRepository;
+
+    @Mock
+    private FuncionarioConverter funcionarioConverter;
 
     @Test
     public void deveListarTudoDoBanco() {
@@ -64,5 +70,28 @@ public class FuncionarioServiceTest {
         funcionarioEntity.setUser(USER);
         return funcionarioEntity;
     }
+
+    @Test
+    public void deveCadastrarFuncionario(){
+        Mockito.when(funcionarioRepository.save(mockFuncionarioEntity())).thenReturn(mockFuncionarioEntity());
+        Mockito.when(funcionarioConverter.converteParaFuncionarioEntity(mockFuncionarioDTO()))
+                .thenReturn(mockFuncionarioEntity());
+
+       FuncionarioEntity funcionarioEntity = funcionarioService.cadastroFuncionario(mockFuncionarioDTO());
+
+       Assert.assertNotNull(funcionarioEntity.getId());
+       Assert.assertEquals(NOME, funcionarioEntity.getNome());
+       Assert.assertEquals(USER, funcionarioEntity.getUser());
+       Mockito.verify(funcionarioRepository, Mockito.times(1)).save(mockFuncionarioEntity());
+    }
+
+    private FuncionarioDTO mockFuncionarioDTO(){
+        return FuncionarioDTO.builder()
+                .id(ID)
+                .nome(NOME)
+                .user(USER)
+                .build();
+    }
+
 
 }
