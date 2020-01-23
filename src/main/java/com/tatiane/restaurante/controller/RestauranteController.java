@@ -2,7 +2,6 @@ package com.tatiane.restaurante.controller;
 
 import com.tatiane.restaurante.converter.RestauranteConverter;
 import com.tatiane.restaurante.dto.RestauranteDTO;
-import com.tatiane.restaurante.exception.RestauranteNotFoundException;
 import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.restaurante.service.RestauranteService;
 import io.swagger.annotations.Api;
@@ -15,9 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
@@ -65,6 +62,13 @@ public class RestauranteController {
         RestauranteEntity restaurante = restauranteService.cadastroRestaurante(restauranteDTO);
         URI uri = uriBuilder.path("/restaurante/{id}").buildAndExpand(restaurante.getId()).toUri();
         return ResponseEntity.created(uri).body(restauranteConverter.converteParaRestauranteDTO(restaurante));
+    }
+
+    @ApiOperation(value = "Edita dados do restaurante")
+    @PutMapping(consumes = {APPLICATION_JSON_UTF8_VALUE},
+            produces = {APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<RestauranteDTO> edicaoDadosRestaurante(@RequestBody @Valid RestauranteDTO restauranteDTO) {
+        return ResponseEntity.ok(restauranteService.edicaoDadosRestaurante(restauranteDTO));
     }
 
 }

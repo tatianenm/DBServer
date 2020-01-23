@@ -57,4 +57,9 @@ public class RestauranteService {
                 .collect(Collectors.toList());
     }
 
+    public RestauranteDTO edicaoDadosRestaurante(RestauranteDTO restauranteDTO) {
+       restauranteRepository.findById(restauranteDTO.getId()).orElseThrow(RestauranteNotFoundException::new);
+        return restauranteConverter.converteParaRestauranteDTO(restauranteRepository.
+                save(restauranteConverter.converteParaRestauranteEntity(restauranteDTO)));
+    }
 }
