@@ -97,4 +97,19 @@ public class RestauranteServiceTest {
 
     }
 
+    @Test
+    public void deveEditarDadosRestaurante(){
+        when(restauranteRepository.findById(any())).thenReturn(Optional.of(mockRestauranteEntity()));
+        when(restauranteRepository.save(any())).thenReturn(mockRestauranteEntity());
+        when(restauranteConverter.converteParaRestauranteDTO(any())).thenReturn(mockRestauranteDTO());
+        when(restauranteConverter.converteParaRestauranteEntity(any())).thenReturn(mockRestauranteEntity());
+
+        RestauranteDTO restauranteDTO = restauranteService.edicaoDadosRestaurante(mockRestauranteDTO());
+
+        Assert.assertEquals(ID, restauranteDTO.getId());
+        Assert.assertEquals(NOME, restauranteDTO.getNome());
+        Assert.assertEquals(ENDERECO, restauranteDTO.getEndereco());
+        verify(restauranteRepository, times(1)).save(mockRestauranteEntity());
+    }
+
 }

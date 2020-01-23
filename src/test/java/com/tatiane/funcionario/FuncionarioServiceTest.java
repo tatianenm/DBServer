@@ -97,5 +97,20 @@ public class FuncionarioServiceTest {
                 .build();
     }
 
+    @Test
+    public void deveEditarDadosFuncionario(){
+        when(funcionarioRepository.findById(any())).thenReturn(Optional.of(mockFuncionarioEntity()));
+        when(funcionarioRepository.save(any())).thenReturn(mockFuncionarioEntity());
+        when(funcionarioConverter.converteParaFuncionarioDTO(any())).thenReturn(mockFuncionarioDTO());
+        when(funcionarioConverter.converteParaFuncionarioEntity(any())).thenReturn(mockFuncionarioEntity());
+
+        FuncionarioDTO funcionarioDTO = funcionarioService.edicaoDadosFuncionario(mockFuncionarioDTO());
+
+        Assert.assertEquals(NOME, funcionarioDTO.getNome());
+        Assert.assertEquals(ID, funcionarioDTO.getId());
+        Assert.assertEquals(USER, funcionarioDTO.getUser());
+        verify(funcionarioRepository,times(1)).save(mockFuncionarioEntity());
+    }
+
 
 }
