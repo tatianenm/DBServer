@@ -58,4 +58,10 @@ public class FuncionarioService {
                 .collect(Collectors.toList());
     }
 
+    public FuncionarioDTO edicaoDadosFuncionario(FuncionarioDTO funcionarioDTO) {
+        funcionarioRepository.findById(funcionarioDTO.getId()).orElseThrow(FuncionarioNotFoundException::new);
+        return funcionarioConverter.converteParaFuncionarioDTO(funcionarioRepository.
+                save(funcionarioConverter.converteParaFuncionarioEntity(funcionarioDTO)));
+    }
+
 }

@@ -64,7 +64,7 @@ public class RestauranteController {
         return ResponseEntity.created(uri).body(restauranteConverter.converteParaRestauranteDTO(restaurante));
     }
 
-    @ApiOperation(value = "Edita dados do restaurante")
+    @ApiOperation(value = "Edição dados do restaurante")
     @PutMapping(consumes = {APPLICATION_JSON_UTF8_VALUE},
             produces = {APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<RestauranteDTO> edicaoDadosRestaurante(@RequestBody @Valid RestauranteDTO restauranteDTO) {

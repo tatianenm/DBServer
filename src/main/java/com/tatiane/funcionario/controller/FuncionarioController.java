@@ -2,7 +2,6 @@ package com.tatiane.funcionario.controller;
 
 import com.tatiane.funcionario.converter.FuncionarioConverter;
 import com.tatiane.funcionario.dto.FuncionarioDTO;
-import com.tatiane.funcionario.exception.FuncionarioNotFoundException;
 import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.funcionario.service.FuncionarioService;
 import io.swagger.annotations.Api;
@@ -16,7 +15,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
@@ -43,7 +41,7 @@ public class FuncionarioController {
 
     @ApiOperation(value = "Excluir funcionário")
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity excluirFuncionario(@PathVariable  Integer id ) {
+    public ResponseEntity excluirFuncionario(@PathVariable Integer id) {
         funcionarioService.excluirFuncionario(id);
         return ResponseEntity.ok().build();
     }
@@ -61,12 +59,19 @@ public class FuncionarioController {
 
     @ApiOperation(value = "Cadastro de Funcionário")
     @PostMapping(produces = {APPLICATION_JSON_UTF8_VALUE},
-                 consumes = {APPLICATION_JSON_UTF8_VALUE})
+            consumes = {APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<FuncionarioDTO> cadastroFuncionario(@RequestBody @Valid FuncionarioDTO funcionarioDTO,
-                                              UriComponentsBuilder uriBuilder) {
+                                                              UriComponentsBuilder uriBuilder) {
         FuncionarioEntity funcionario = funcionarioService.cadastroFuncionario(funcionarioDTO);
         URI uri = uriBuilder.path("/funcionario/{id}").buildAndExpand(funcionario.getId()).toUri();
         return ResponseEntity.created(uri).body(funcionarioConverter.converteParaFuncionarioDTO(funcionario));
+    }
+
+    @ApiOperation(value = "Edição dados do funcionário")
+    @PutMapping(produces = {APPLICATION_JSON_UTF8_VALUE},
+            consumes = {APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<FuncionarioDTO> edicaoDadosFuncionario(@RequestBody @Valid FuncionarioDTO funcionarioDTO) {
+        return ResponseEntity.ok(funcionarioService.edicaoDadosFuncionario(funcionarioDTO));
     }
 
 }
