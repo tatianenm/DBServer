@@ -41,6 +41,7 @@ public class RestauranteServiceTest {
     @Test
     public void deveListarTudoDoBanco(){
         when(restauranteRepository.findAll()).thenReturn(Arrays.asList(mockRestauranteEntity()));
+        when(restauranteConverter.converteParaRestauranteDTO(any())).thenReturn(mockRestauranteDTO());
 
        List<RestauranteDTO> restaurantes = restauranteService.findAll();
 

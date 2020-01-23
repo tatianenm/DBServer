@@ -41,8 +41,9 @@ public class FuncionarioServiceTest {
     @Test
     public void deveListarTudoDoBanco() {
         when(funcionarioRepository.findAll()).thenReturn(Arrays.asList(mockFuncionarioEntity()));
+        when(funcionarioConverter.converteParaFuncionarioDTO(any())).thenReturn(mockFuncionarioDTO());
 
-        List<FuncionarioEntity> funcionarios = funcionarioService.findAll();
+        List<FuncionarioDTO> funcionarios = funcionarioService.findAll();
 
         Assert.assertEquals(ID, funcionarios.get(0).getId());
         Assert.assertEquals(NOME, funcionarios.get(0).getNome());

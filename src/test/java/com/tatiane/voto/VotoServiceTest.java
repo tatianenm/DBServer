@@ -1,5 +1,6 @@
 package com.tatiane.voto;
 
+import com.tatiane.funcionario.converter.FuncionarioConverter;
 import com.tatiane.funcionario.dto.FuncionarioDTO;
 import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.restaurante.converter.RestauranteConverter;
@@ -8,6 +9,7 @@ import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.voto.converter.VotoConverter;
 import com.tatiane.voto.dto.VotacaoDto;
 import com.tatiane.voto.dto.VotarDto;
+import com.tatiane.voto.dto.VotoPesquisaDTO;
 import com.tatiane.voto.model.VotoEntity;
 import com.tatiane.voto.repository.VotoRepository;
 import com.tatiane.voto.service.VotoService;
@@ -53,14 +55,18 @@ public class VotoServiceTest {
     @Mock
     private RestauranteConverter restauranteConverter;
 
+    @Mock
+    private FuncionarioConverter funcionarioConverter;
+
     @Test
     public void deveListarTudoDoBanco() {
         when(votoRepository.findAll()).thenReturn(Arrays.asList(mockVotoEntity()));
-        List<VotoEntity> votos = votoService.findAll();
+        when(votoConverter.converteParaVotoPesquisaDTO(any())).thenReturn(mockVotoPesquisaDTO());
+        List<VotoPesquisaDTO> votos = votoService.findAll();
 
         Assert.assertEquals(ID, votos.get(0).getId());
-        Assert.assertEquals(ID_RESTAURANTE, votos.get(0).getRestaurante().getId());
-        Assert.assertEquals(ID_FUNCIONARIO, votos.get(0).getFuncionario().getId());
+        Assert.assertEquals(ID_RESTAURANTE, votos.get(0).getRestauranteDTO().getId());
+        Assert.assertEquals(ID_FUNCIONARIO, votos.get(0).getFuncionarioDTO().getId());
     }
 
     @Test
@@ -122,6 +128,14 @@ public class VotoServiceTest {
         VotacaoDto votacaoDto = votoService.retornaResultadoVotacao(DATA);
 
         Assert.assertNotNull(votacaoDto.getQuantidadeVotos());
+    }
+
+    private VotoPesquisaDTO mockVotoPesquisaDTO(){
+        return VotoPesquisaDTO.builder()
+                .restauranteDTO(restauranteConverter.converteParaRestauranteDTO(mockRestauranteEntity()))
+                .funcionarioDTO(funcionarioConverter.converteParaFuncionarioDTO(mockFuncionarioEntity()))
+                .data(DATA)
+                .build();
     }
 
 
