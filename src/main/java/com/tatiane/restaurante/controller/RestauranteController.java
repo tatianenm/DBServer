@@ -39,14 +39,7 @@ public class RestauranteController {
     @ApiOperation(value = "Retorna uma lista de restaurantes")
     @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<List<RestauranteDTO>> findAll() {
-        List<RestauranteDTO> restaurantes = new ArrayList<>();
-        restauranteService.findAll().forEach(restauranteEntity -> {
-            restaurantes.add(restauranteConverter.converteParaRestauranteDTO(restauranteEntity));
-        });
-        if (Objects.isNull(restaurantes)) {
-            throw new RestauranteNotFoundException();
-        }
-        return ResponseEntity.ok(restaurantes);
+        return ResponseEntity.ok(restauranteService.findAll());
     }
 
     @ApiOperation(value = "Excluir restaurante")

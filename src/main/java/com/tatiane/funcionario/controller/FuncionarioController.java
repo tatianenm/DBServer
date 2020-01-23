@@ -38,14 +38,7 @@ public class FuncionarioController {
     @ApiOperation(value = "Retorna uma lista de funcionários")
     @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<List<FuncionarioDTO>> findAll() {
-        List<FuncionarioDTO> funcionarios = new ArrayList<>();
-        funcionarioService.findAll().forEach(funcionarioEntity -> {
-            funcionarios.add(funcionarioConverter.converteParaFuncionarioDTO(funcionarioEntity));
-        });
-        if(Objects.isNull(funcionarios)){
-            throw new FuncionarioNotFoundException();
-        }
-        return ResponseEntity.ok(funcionarios);
+        return ResponseEntity.ok(funcionarioService.findAll());
     }
 
     @ApiOperation(value = "Excluir funcionário")

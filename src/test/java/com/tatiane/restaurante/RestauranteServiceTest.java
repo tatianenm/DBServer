@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.*;
+
 @RunWith(SpringRunner.class)
 public class RestauranteServiceTest {
 
@@ -38,9 +40,9 @@ public class RestauranteServiceTest {
 
     @Test
     public void deveListarTudoDoBanco(){
-        Mockito.when(restauranteRepository.findAll()).thenReturn(Arrays.asList(mockRestauranteEntity()));
+        when(restauranteRepository.findAll()).thenReturn(Arrays.asList(mockRestauranteEntity()));
 
-       List<RestauranteEntity> restaurantes = restauranteService.findAll();
+       List<RestauranteDTO> restaurantes = restauranteService.findAll();
 
         Assert.assertEquals(ID, restaurantes.get(0).getId());
         Assert.assertEquals(NOME, restaurantes.get(0).getNome());
@@ -49,7 +51,7 @@ public class RestauranteServiceTest {
 
     @Test
     public void devePesquisarPeloIdRestaurante(){
-        Mockito.when(restauranteRepository.findById(ID)).thenReturn(Optional.of(mockRestauranteEntity()));
+        when(restauranteRepository.findById(ID)).thenReturn(Optional.of(mockRestauranteEntity()));
 
         RestauranteEntity restauranteEntity = restauranteService.findById(ID);
 
@@ -58,9 +60,9 @@ public class RestauranteServiceTest {
 
     @Test
     public void deveExcluirRestaurante(){
-        Mockito.when(restauranteRepository.findById(ID)).thenReturn(Optional.of(mockRestauranteEntity()));
+        when(restauranteRepository.findById(ID)).thenReturn(Optional.of(mockRestauranteEntity()));
         restauranteService.excluirRestaurante(ID);
-        Mockito.verify(restauranteRepository, Mockito.times(1)).deleteById(ID);
+        verify(restauranteRepository, times(1)).deleteById(ID);
         }
 
     private RestauranteEntity mockRestauranteEntity(){
@@ -81,8 +83,8 @@ public class RestauranteServiceTest {
 
     @Test
     public void deveCadastrarRestaurante(){
-        Mockito.when(restauranteRepository.save(mockRestauranteEntity())).thenReturn(mockRestauranteEntity());
-        Mockito.when(restauranteConverter.converteParaRestauranteEntity(mockRestauranteDTO())).
+        when(restauranteRepository.save(mockRestauranteEntity())).thenReturn(mockRestauranteEntity());
+        when(restauranteConverter.converteParaRestauranteEntity(mockRestauranteDTO())).
                 thenReturn(mockRestauranteEntity());
         RestauranteEntity restauranteEntity = restauranteService.cadastroRestaurante(mockRestauranteDTO());
 
@@ -90,7 +92,7 @@ public class RestauranteServiceTest {
         Assert.assertEquals(ID, restauranteEntity.getId());
         Assert.assertEquals(NOME, restauranteEntity.getNome());
         Assert.assertEquals(ENDERECO, restauranteEntity.getEndereco());
-        Mockito.verify(restauranteRepository, Mockito.times(1)).save(mockRestauranteEntity());
+        verify(restauranteRepository, times(1)).save(mockRestauranteEntity());
 
     }
 

@@ -2,11 +2,10 @@ package com.tatiane.voto.service;
 
 import com.tatiane.funcionario.converter.FuncionarioConverter;
 import com.tatiane.restaurante.converter.RestauranteConverter;
-import com.tatiane.restaurante.dto.RestauranteDTO;
-import com.tatiane.restaurante.model.RestauranteEntity;
 import com.tatiane.voto.converter.VotoConverter;
 import com.tatiane.voto.dto.VotacaoDto;
 import com.tatiane.voto.dto.VotarDto;
+import com.tatiane.voto.dto.VotoPesquisaDTO;
 import com.tatiane.voto.exception.VotoNotFoundException;
 import com.tatiane.voto.model.VotoEntity;
 import com.tatiane.voto.repository.VotoRepository;
@@ -18,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,11 +44,15 @@ public class VotoService {
         this.votoValidator = votoValidator;
     }
 
-    public List<VotoEntity> findAll() {
-        return votoRepository.findAll()
-                .stream()
-                .sorted((v1, v2) -> v2.getData().compareTo(v1.getData()))
-                .collect(Collectors.toList());
+    public List<VotoPesquisaDTO> findAll() {
+        if (Objects.isNull(votoRepository.findAll())) {
+            throw new VotoNotFoundException();
+        }
+        List<VotoPesquisaDTO> votoPesquisaDTOS = new ArrayList<>();
+        ordenaListaVotos(votoRepository.findAll()).forEach(votoEntity -> {
+            votoPesquisaDTOS.add(votoConverter.converteParaVotoPesquisaDTO(votoEntity));
+        });
+        return votoPesquisaDTOS;
     }
 
     public VotoEntity votar(VotarDto votarDto) {
@@ -85,5 +89,11 @@ public class VotoService {
     public void excluir(Integer id) {
         votoRepository.findById(id).orElseThrow(VotoNotFoundException::new);
         votoRepository.deleteById(id);
+    }
+
+    private List<VotoEntity> ordenaListaVotos(List<VotoEntity> votoList) {
+        return votoList.stream()
+                .sorted((v1, v2) -> v2.getData().compareTo(v1.getData()))
+                .collect(Collectors.toList());
     }
 }

@@ -41,14 +41,7 @@ public class VotoController {
     @ApiOperation(value = "Retorna uma lista de votos")
     @GetMapping()
     public ResponseEntity<List<VotoPesquisaDTO>> findAll() {
-        List<VotoPesquisaDTO> votoPesquisaDTOS = new ArrayList<>();
-        votoService.findAll().forEach(votoEntity -> {
-            votoPesquisaDTOS.add(votoConverter.converteParaVotoPesquisaDTO(votoEntity));
-        });
-        if (Objects.isNull(votoPesquisaDTOS)) {
-            throw new VotoNotFoundException();
-        }
-        return ResponseEntity.ok(votoPesquisaDTOS);
+        return ResponseEntity.ok(votoService.findAll());
     }
 
     @ApiOperation(value = "Resultado da votação")

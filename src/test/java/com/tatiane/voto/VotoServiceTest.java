@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.*;
+
 @RunWith(SpringRunner.class)
 public class VotoServiceTest {
 
@@ -53,7 +55,7 @@ public class VotoServiceTest {
 
     @Test
     public void deveListarTudoDoBanco() {
-        Mockito.when(votoRepository.findAll()).thenReturn(Arrays.asList(mockVotoEntity()));
+        when(votoRepository.findAll()).thenReturn(Arrays.asList(mockVotoEntity()));
         List<VotoEntity> votos = votoService.findAll();
 
         Assert.assertEquals(ID, votos.get(0).getId());
@@ -63,14 +65,14 @@ public class VotoServiceTest {
 
     @Test
     public void deveSalvarVotoRestauranteTeste() {
-        Mockito.when(votoRepository.save(Mockito.any())).thenReturn(mockVotoEntity());
+        when(votoRepository.save(any())).thenReturn(mockVotoEntity());
         VotoEntity voto = votoService.votar(mockVotarDTO());
 
         Assert.assertEquals(ID, voto.getId());
         Assert.assertEquals(ID_FUNCIONARIO, voto.getFuncionario().getId());
         Assert.assertEquals(ID_RESTAURANTE, voto.getRestaurante().getId());
         Assert.assertEquals(DATA, voto.getData());
-        Mockito.verify(votoRepository).save(Mockito.any());
+        verify(votoRepository).save(any());
     }
 
     private VotarDto mockVotarDTO() {
@@ -106,16 +108,16 @@ public class VotoServiceTest {
 
     @Test
     public void deveExcluirVoto() {
-        Mockito.when(votoRepository.findById(ID)).thenReturn(Optional.of(mockVotoEntity()));
+        when(votoRepository.findById(ID)).thenReturn(Optional.of(mockVotoEntity()));
         votoService.excluir(ID);
-        Mockito.verify(votoRepository, Mockito.times(1)).deleteById(ID);
+        verify(votoRepository, times(1)).deleteById(ID);
     }
 
     @Test
     public void deveRetornarResultadoVotacao() {
-        Mockito.when(votoRepository.findByData(DATA)).thenReturn(Arrays.asList(mockVotoEntity()));
-        Mockito.when(votoRepository.
-                findByRestauranteAndDataBetweenAndDataNot(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+        when(votoRepository.findByData(DATA)).thenReturn(Arrays.asList(mockVotoEntity()));
+        when(votoRepository.
+                findByRestauranteAndDataBetweenAndDataNot(any(), any(), any(), any()))
                 .thenReturn(Arrays.asList(mockVotoEntity()));
         VotacaoDto votacaoDto = votoService.retornaResultadoVotacao(DATA);
 

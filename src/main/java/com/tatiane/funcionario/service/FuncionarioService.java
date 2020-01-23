@@ -8,7 +8,9 @@ import com.tatiane.funcionario.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,11 +26,16 @@ public class FuncionarioService {
         this.funcionarioConverter = funcionarioConverter;
     }
 
-    public List<FuncionarioEntity> findAll() {
-        return funcionarioRepository.findAll()
-                .stream()
-                .sorted((f1, f2) -> f1.getNome().compareToIgnoreCase(f2.getNome()))
-                .collect(Collectors.toList());
+    public List<FuncionarioDTO> findAll() {
+        if (Objects.isNull(funcionarioRepository.findAll())) {
+            throw new FuncionarioNotFoundException();
+        }
+
+        List<FuncionarioDTO> funcionarios = new ArrayList<>();
+        ordenaListaFuncionarios(funcionarioRepository.findAll()).forEach(funcionarioEntity -> {
+            funcionarios.add(funcionarioConverter.converteParaFuncionarioDTO(funcionarioEntity));
+        });
+        return funcionarios;
     }
 
     public void excluirFuncionario(Integer id) {
@@ -43,6 +50,12 @@ public class FuncionarioService {
 
     public FuncionarioEntity cadastroFuncionario(FuncionarioDTO funcionarioDTO) {
         return funcionarioRepository.save(funcionarioConverter.converteParaFuncionarioEntity(funcionarioDTO));
+    }
+
+    private List<FuncionarioEntity> ordenaListaFuncionarios(List<FuncionarioEntity> funcionarioList) {
+        return funcionarioList.stream()
+                .sorted((f1, f2) -> f1.getNome().compareToIgnoreCase(f2.getNome()))
+                .collect(Collectors.toList());
     }
 
 }

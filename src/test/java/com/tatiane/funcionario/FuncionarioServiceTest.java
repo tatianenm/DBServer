@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.*;
+
 @RunWith(SpringRunner.class)
 public class FuncionarioServiceTest {
 
@@ -38,7 +40,7 @@ public class FuncionarioServiceTest {
 
     @Test
     public void deveListarTudoDoBanco() {
-        Mockito.when(funcionarioRepository.findAll()).thenReturn(Arrays.asList(mockFuncionarioEntity()));
+        when(funcionarioRepository.findAll()).thenReturn(Arrays.asList(mockFuncionarioEntity()));
 
         List<FuncionarioEntity> funcionarios = funcionarioService.findAll();
 
@@ -49,14 +51,14 @@ public class FuncionarioServiceTest {
 
     @Test
     public void deveExcluirFuncionario() {
-        Mockito.when(funcionarioRepository.findById(ID)).thenReturn(Optional.of(mockFuncionarioEntity()));
+        when(funcionarioRepository.findById(ID)).thenReturn(Optional.of(mockFuncionarioEntity()));
         funcionarioService.excluirFuncionario(ID);
-        Mockito.verify(funcionarioRepository, Mockito.times(1)).deleteById(ID);
+        verify(funcionarioRepository, times(1)).deleteById(ID);
     }
 
     @Test
     public void devePesquisarFuncionarioPeloNome() {
-        Mockito.when(funcionarioRepository.findByNomeContainingIgnoreCase(NOME)).
+        when(funcionarioRepository.findByNomeContainingIgnoreCase(NOME)).
                 thenReturn(Optional.of(Arrays.asList(mockFuncionarioEntity())));
         List<FuncionarioEntity> funcionarios = funcionarioService.pesquisarFuncionarioPeloNome(NOME);
 
@@ -73,19 +75,20 @@ public class FuncionarioServiceTest {
 
     @Test
     public void deveCadastrarFuncionario(){
-        Mockito.when(funcionarioRepository.save(mockFuncionarioEntity())).thenReturn(mockFuncionarioEntity());
-        Mockito.when(funcionarioConverter.converteParaFuncionarioEntity(mockFuncionarioDTO()))
-                .thenReturn(mockFuncionarioEntity());
+        when(funcionarioRepository.save(mockFuncionarioEntity())).thenReturn(mockFuncionarioEntity());
+        when(funcionarioConverter.converteParaFuncionarioEntity(mockFuncionarioDTO())).
+                thenReturn(mockFuncionarioEntity());
+        FuncionarioEntity funcionarioEntity = funcionarioService.cadastroFuncionario(mockFuncionarioDTO());
 
-       FuncionarioEntity funcionarioEntity = funcionarioService.cadastroFuncionario(mockFuncionarioDTO());
+        Assert.assertNotNull(funcionarioEntity.getId());
+        Assert.assertEquals(ID, funcionarioEntity.getId());
+        Assert.assertEquals(NOME, funcionarioEntity.getNome());
+        Assert.assertEquals(USER, funcionarioEntity.getUser());
+        verify(funcionarioRepository, times(1)).save(mockFuncionarioEntity());
 
-       Assert.assertNotNull(funcionarioEntity.getId());
-       Assert.assertEquals(NOME, funcionarioEntity.getNome());
-       Assert.assertEquals(USER, funcionarioEntity.getUser());
-       Mockito.verify(funcionarioRepository, Mockito.times(1)).save(mockFuncionarioEntity());
     }
 
-    private FuncionarioDTO mockFuncionarioDTO(){
+    private FuncionarioDTO mockFuncionarioDTO() {
         return FuncionarioDTO.builder()
                 .id(ID)
                 .nome(NOME)
