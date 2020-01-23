@@ -132,9 +132,21 @@ public class VotoServiceTest {
 
     private VotoPesquisaDTO mockVotoPesquisaDTO(){
         return VotoPesquisaDTO.builder()
-                .restauranteDTO(restauranteConverter.converteParaRestauranteDTO(mockRestauranteEntity()))
-                .funcionarioDTO(funcionarioConverter.converteParaFuncionarioDTO(mockFuncionarioEntity()))
+                .restauranteDTO(mockRestauranteDTO())
+                .funcionarioDTO(mockFuncionarioDTO())
                 .data(DATA)
+                .id(ID)
+                .build();
+    }
+
+    private RestauranteDTO mockRestauranteDTO(){
+        return RestauranteDTO.builder()
+                .id(ID_RESTAURANTE)
+                .build();
+    }
+    private FuncionarioDTO mockFuncionarioDTO(){
+        return FuncionarioDTO.builder()
+                .id(ID_FUNCIONARIO)
                 .build();
     }
 
