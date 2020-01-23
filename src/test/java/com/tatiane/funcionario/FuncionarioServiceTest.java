@@ -76,8 +76,8 @@ public class FuncionarioServiceTest {
 
     @Test
     public void deveCadastrarFuncionario(){
-        when(funcionarioRepository.save(mockFuncionarioEntity())).thenReturn(mockFuncionarioEntity());
-        when(funcionarioConverter.converteParaFuncionarioEntity(mockFuncionarioDTO())).
+        when(funcionarioRepository.save(any())).thenReturn(mockFuncionarioEntity());
+        when(funcionarioConverter.converteParaFuncionarioEntity(any())).
                 thenReturn(mockFuncionarioEntity());
         FuncionarioEntity funcionarioEntity = funcionarioService.cadastroFuncionario(mockFuncionarioDTO());
 
