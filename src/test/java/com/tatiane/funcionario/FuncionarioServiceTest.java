@@ -2,16 +2,17 @@ package com.tatiane.funcionario;
 
 import com.tatiane.funcionario.converter.FuncionarioConverter;
 import com.tatiane.funcionario.dto.FuncionarioDTO;
+import com.tatiane.funcionario.exception.FuncionarioNotFoundException;
 import com.tatiane.funcionario.model.FuncionarioEntity;
 import com.tatiane.funcionario.repository.FuncionarioRepository;
 import com.tatiane.funcionario.service.FuncionarioService;
-import com.tatiane.restaurante.model.RestauranteEntity;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -38,6 +39,9 @@ public class FuncionarioServiceTest {
     @Mock
     private FuncionarioConverter funcionarioConverter;
 
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
+
     @Test
     public void deveListarTudoDoBanco() {
         when(funcionarioRepository.findAll()).thenReturn(Arrays.asList(mockFuncionarioEntity()));
@@ -57,6 +61,11 @@ public class FuncionarioServiceTest {
         verify(funcionarioRepository, times(1)).deleteById(ID);
     }
 
+    @Test(expected = FuncionarioNotFoundException.class)
+    public void deveLancarExceptionAoExcluirFuncionarioNaoExistente() {
+        funcionarioService.excluirFuncionario(0);
+    }
+
     @Test
     public void devePesquisarFuncionarioPeloNome() {
         when(funcionarioRepository.findByNomeContainingIgnoreCase(NOME)).
@@ -64,6 +73,13 @@ public class FuncionarioServiceTest {
         List<FuncionarioEntity> funcionarios = funcionarioService.pesquisarFuncionarioPeloNome(NOME);
 
         Assert.assertEquals(NOME, funcionarios.get(0).getNome());
+    }
+
+    @Test
+    public void deveLancarExceptionQuandoPesquisarFuncionarioPeloNomeNaoExistente() {
+        exceptionRule.expect(FuncionarioNotFoundException.class);
+        exceptionRule.expectMessage("Funcionário não foi encontrado.");
+        funcionarioService.pesquisarFuncionarioPeloNome("");
     }
 
     private FuncionarioEntity mockFuncionarioEntity() {
@@ -75,7 +91,7 @@ public class FuncionarioServiceTest {
     }
 
     @Test
-    public void deveCadastrarFuncionario(){
+    public void deveCadastrarFuncionario() {
         when(funcionarioRepository.save(any())).thenReturn(mockFuncionarioEntity());
         when(funcionarioConverter.converteParaFuncionarioEntity(any())).
                 thenReturn(mockFuncionarioEntity());
@@ -98,7 +114,7 @@ public class FuncionarioServiceTest {
     }
 
     @Test
-    public void deveEditarDadosFuncionario(){
+    public void deveEditarDadosFuncionario() {
         when(funcionarioRepository.findById(any())).thenReturn(Optional.of(mockFuncionarioEntity()));
         when(funcionarioRepository.save(any())).thenReturn(mockFuncionarioEntity());
         when(funcionarioConverter.converteParaFuncionarioDTO(any())).thenReturn(mockFuncionarioDTO());
@@ -109,7 +125,7 @@ public class FuncionarioServiceTest {
         Assert.assertEquals(NOME, funcionarioDTO.getNome());
         Assert.assertEquals(ID, funcionarioDTO.getId());
         Assert.assertEquals(USER, funcionarioDTO.getUser());
-        verify(funcionarioRepository,times(1)).save(mockFuncionarioEntity());
+        verify(funcionarioRepository, times(1)).save(mockFuncionarioEntity());
     }
 
 
