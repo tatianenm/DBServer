@@ -23,6 +23,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import static org.mockito.Mockito.*;
+
 @RunWith(SpringRunner.class)
 public class VotoValidatorTest {
 
@@ -41,10 +43,10 @@ public class VotoValidatorTest {
     @Test
     public void deveRetornarErroVotoRepetido() {
         exception.expectMessage(VotoValidator.MSG_VOTO_REPETIDO);
-        Mockito.when(votoRepository.findByFuncionarioAndDataAndRestaurante(Mockito.any(), Mockito.any(), Mockito.any()))
+        when(votoRepository.findByFuncionarioAndDataAndRestaurante(any(), any(), any()))
                 .thenReturn(new VotoEntity());
         votoValidator.validaSeFuncionarioJaVotouRestauranteNoMesmoDia(mockVotarDTO());
-        Mockito.verify(votoRepository).findByFuncionarioAndDataAndRestaurante(Mockito.any(), Mockito.any(), Mockito.any());
+        verify(votoRepository).findByFuncionarioAndDataAndRestaurante(any(), any(), any());
     }
 
     private VotarDto mockVotarDTO() {
@@ -59,12 +61,12 @@ public class VotoValidatorTest {
     @Test
     public void deveRetornarErroRestauranteRepetidoNaSemana() {
         exception.expectMessage(VotoValidator.MSG_RESTAURANTE_REPETIDO);
-        Mockito.when(votoRepository.
-                findByRestauranteAndDataBetweenAndDataNot(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+        when(votoRepository.
+                findByRestauranteAndDataBetweenAndDataNot(any(), any(), any(), any()))
                 .thenReturn(Arrays.asList(mockVotoEntity()));
         votoValidator.validaSeRestauranteJaFoiEscolhidoNaSemana(mockVotacaoDTO());
-        Mockito.verify(votoRepository)
-                .findByRestauranteAndDataBetweenAndDataNot(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any());
+        verify(votoRepository)
+                .findByRestauranteAndDataBetweenAndDataNot(any(), any(), any(), any());
     }
 
     private VotoEntity mockVotoEntity() {
